@@ -234,3 +234,13 @@
 			EventUtil.addHandler(fd123,'keyup',tabForward);
 		})();
 	</script>
+
+####HTML5约束验证API
+
+	<form name="fm13">
+		<!-- required必填 -->
+		<input type="text" name="username" required />
+		<input type="email" name="email" />
+		<input type="url" name="url" />
+		<input type="text" pattern="\d" name="count" />
+	</form>
