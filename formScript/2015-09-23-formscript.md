@@ -160,3 +160,77 @@
 		});
 	</script>
 
+###文本框脚本
+
+####过滤输入
+
+例如过滤非数字的输入
+
+	<form name="fm10">
+		<input type="text" />
+	</form>
+	<script type="text/javascript">
+		var fm10=document.forms['fm10'];
+		EventUtil.addHandler(fm10.elements[0],'keypress',function(event){
+			event=EventUtil.getEvent(event);
+			var target=EventUtil.getTarget(event);
+			
+			var charCode=EventUtil.getCharCode(event);
+			if(! /\d/.test(String.fromCharCode(charCode)) && charCode>9){
+				EventUtil.preventDefault(event);
+			}
+			
+		});
+		//当输入的是中文的时候，无效
+	</script>
+
+####访问剪贴板
+
+	<form name="fm11">
+		<input type="text" />
+	</form>
+	<script type="text/javascript">
+		var fm11=document.forms['fm11'];
+		EventUtil.addHandler(fm11.elements[0],'paste',function(event){
+			event=EventUtil.getEvent(event);
+			var text=EventUtil.getClipboardText(event);
+			if(! /^\d*$/.test(text)){
+				EventUtil.preventDefault(event);
+			}
+			
+		});
+	</script>
+
+####自动切换焦点
+
+	<form name="fm12">
+		<input type="text" maxlength="3" />
+		<input type="text" maxlength="3" />
+		<input type="text" maxlength="4" />
+	</form>
+	<script type="text/javascript">
+		var fm12=document.forms['fm12']; 
+		(function(){
+			function tabForward(event){
+				event=EventUtil.getEvent(event);
+				var target=EventUtil.getTarget(event);	
+				if(target.value.length==target.maxLength){
+					var form=target.form;
+					for(var i=0,len=form.elements.length;i<len;i++){
+						if(form.elements[i]==target){
+							if(form.elements[i+1]){
+								form.elements[i+1].focus();
+							}
+							return;
+						}
+					}
+				}
+			}
+			var fd121=fm12.elements[0];
+			var fd122=fm12.elements[1];
+			var fd123=fm12.elements[2];
+			EventUtil.addHandler(fd121,'keyup',tabForward);
+			EventUtil.addHandler(fd122,'keyup',tabForward);
+			EventUtil.addHandler(fd123,'keyup',tabForward);
+		})();
+	</script>
