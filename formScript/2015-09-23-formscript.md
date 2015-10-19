@@ -1,5 +1,6 @@
 ##目录
 
+
 ###取得form元素的引用
 
 	<body>
@@ -244,3 +245,125 @@
 		<input type="url" name="url" />
 		<input type="text" pattern="\d" name="count" />
 	</form>
+
+###选择框脚本
+
+	<form name="fm14">
+		<select>
+			<option value="v1">v11111的文本</option>
+			<option value="v2">v21111的文本</option>
+			<option value="v3">v31111的文本</option>
+			<option value="v4">v41111的文本</option>
+			<option value="v5">v51111的文本</option>
+		</select>
+		<input type="button" value="点击查看option的个数" />
+		<input type="button" value="" />
+		<input type="button" value="点击显示第一个option的value值" />
+		<input type="button" value="点击显示第2个option的文本值" />
+		<input type="button" value="点击显示选择了哪个选项" />
+		<h2>添加选项的方法</h2>
+		<input type="button" value="点击按钮，新增一个选项（使用js动态创建选项）" name="input6" />
+		<input type="button" value="点击按钮，新增一个选项（使用option构造函数方法）" name="input7" />
+		<input type="button" value="点击按钮，新增一个选项（使用选择框的add方法）" name="input8" />
+		<h2>移除选项</h2>
+		<input type="button" value="点击按钮移除选项(使用DOM动态移除的方法)" name="input9" />
+		<input type="button" value="点击按钮移除选项(选择框的remove方法)" name="input10" />
+		<input type="button" value="点击按钮移除选项(使用js动态移除的方法)" name="input11" />
+		<select name="s2">
+			<option value="1">s1111111111111</option>
+			<option value="2">s2222222222222</option>
+			<option value="3">s3333333333333</option>
+			<option value="4">s4444444444444</option>
+		</select>
+		<input type="button" value="移动选项（点击按钮，复制第一个选择框里的第一个选项到第二个选择框里）" name="input12" />
+	</form>
+	<script type="text/javascript">
+		var fm14=document.forms['fm14'];
+		fm14.elements[1].onclick=function(){
+			alert(fm14.elements[0].options.length);
+		};
+		// fm14.elements[2].onclick=function(){
+			// fm14.elements[0].add('<option value="v5">v5</option>',0);
+		// };
+		fm14.elements[3].onclick=function(){
+			alert(fm14.elements[0].options[0].value);
+		};
+		fm14.elements[4].onclick=function(){
+			alert(fm14.elements[0].options[1].text);
+		};
+		
+		fm14.elements[5].onclick=function(){
+			var selectedIndex=fm14.elements[0].selectedIndex;
+			var selectedOption=fm14.elements[0].options[selectedIndex];
+			alert(selectedIndex);
+		};
+			/*
+         * 添加选项的三种方法
+         * 1：DOM的appendChild（）方法
+         */
+		fm14.elements['input6'].onclick=function(){
+			var newoption=document.createElement('option');
+			newoption.appendChild(document.createTextNode('使用第一种方法新增的选项'));
+			newoption.setAttribute('value','v61111');
+			fm14.elements[0].appendChild(newoption);
+			alert('新增选项成功');
+		};
+		/*
+		 * 添加选项的第二种方法
+		 * Option构造函数
+		 * Option('option text','option value')
+		 * ie8一下有bug
+		 */
+		fm14.elements['input7'].onclick=function(){
+			var newoption2=new Option('使用第二种方法新增的选项','v7111111');
+			fm14.elements[0].appendChild(newoption2);
+			alert('新增选项成功');
+		};
+		/*
+		 * 添加选项的第三种方法
+		 * add（）；方法
+		 */
+		fm14.elements['input8'].onclick=function(){
+			var newoption3=new Option('使用第三种方法新增的选项','v8111111');
+			fm14.elements[0].add(newoption3,undefined);
+			alert('新增选项成功');
+		};
+		/*
+		 * 移除选项
+		 * 方法1：DOM的removeChild（）方法
+		 */
+		fm14.elements['input9'].onclick=function(){
+			fm14.elements[0].removeChild(fm14.elements[0].options[0]);
+			alert('成功移除选项');
+		};
+		/*
+		 * 移除选项
+		 * 方法2：选择框的remove方法
+		 */
+		fm14.elements['input10'].onclick=function(){
+			fm14.elements[0].remove(1);
+			alert('成功移除选项');
+		};
+		/*
+		 * 移除选项
+		 * 方法3：设置每个选项为null
+		 * DOM遗留机制
+		 */
+		fm14.elements['input11'].onclick=function(){
+			fm14.elements[0].options[2]=null;
+			alert('成功移除选项');
+		};
+		/*
+		 * 移动选项
+		 */
+		fm14.elements['input12'].onclick=function(){
+			var st1=fm14.elements['0'];
+			var st2=fm14.elements['s2'];
+			st2.appendChild(st1.options[0]);
+			alert('成功移动选项');
+		};
+		
+	</script>
+
+###表单序列化
+
