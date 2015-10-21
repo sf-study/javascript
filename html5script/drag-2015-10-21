@@ -1,0 +1,28 @@
+###drag事件的支持性
+
++ firefox3.5
+
++ Safari3+
+
++ chrome
+
++ ie4
+
+###拖放事件
+
+####对于被拖动的元素
+
++ dragstart
+
++ drag
+
++ dragend
+
+####对于目标元素
+
++ dragenter
+
++ dragover
+
++ dragleave or drop
+
