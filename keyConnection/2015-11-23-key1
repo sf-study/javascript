@@ -1,0 +1,59 @@
+#基本概念注意事项
+
+##变量
+
+使用var操作符定义的变量，将成为定义该变量的作用域中的局部变量
+
+	<script type="text/javascript">
+		function test(){
+			var m="hi";//定义在test函数中的局部变量
+			w=10;//全局变量
+		}
+	</script>
+
+对于上面的代码来说，只要调用一次test函数，变量w就有了意义，在函数外部的任何地方都能访问到
+
+##数据类型
+
+五种基本的数据类型：Undefined,Null,Boolean,Number,String
+
+一种复杂数据类型：Object
+
+###typeof操作符-判断数据类型
+
+表格中是不同数据类型使用该操作符后返回的值
+
+|数据类型|例子|使用typeof操作符的返回值|
+|---|:--|:---|
+|未定义|var n;|undefined|
+|布尔值|true|boolean|
+|字符串类型|"xinxin"|string|
+|数值|95|number|
+|对象或者null|var a={};|object|
+|函数|function n(){}|function|
+
+	/*
+	 * 使用typeof操作符
+	 */
+	var a,b=true,c="",d=3,e={},f=function(){};
+	console.log("a:"+typeof a);
+	console.log("b:"+typeof b);
+	console.log("c:"+typeof c);
+	console.log("d:"+typeof d);
+	console.log("e:"+typeof e);
+	console.log("f:"+typeof f);
+
+###Undefined类型
+
+特殊的变量，在使用var声明变量但未对其加以初始化的时候，这个值就是undefined
+
+直接使用一个没有定义的变量，会报错
+
+	alert(age);//报错
+
+###NULL类型
+
+特殊的值，null值表示一个空对象的指针
+
+	var g=null;
+	console.log(g);//null
