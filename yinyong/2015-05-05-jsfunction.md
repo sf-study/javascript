@@ -13,15 +13,15 @@ tags: [test, jekyll, welcome]
 
 ###使用函数声明语法定义###
 
-	function sum(num1,num2){
-		return num1+num2;
+	function fa1(n1,n2){
+		return n1+n2;
 	}
 
 
 ###使用函数表达式定义函数###
 
-	var sum=function(){
-		return num1+num2;
+	var fa2=function(n1,n2){
+		return n1+n2;
 	};
 	//注意，函数表达式定义函数，花括号后面要加分号。
 
@@ -30,7 +30,7 @@ tags: [test, jekyll, welcome]
 
 这种方法接受任意数量的参数，但最后一个参数是种都被默认为是函数体，前面的参数是新函数的参数；
 
-	var sum=function("num1","num2","return num1+num2");
+	var fa3=Function("n1","n2","return n1+n2");
 
 
 **函数名仅是指向函数的指针**
@@ -55,7 +55,7 @@ tags: [test, jekyll, welcome]
 
 ###区分函数声明与函数表达式 ###
 
-实际上解析器在向执行环境中加载数据时，对函数声明和函数表达式并非一视同仁。解析器会率先读取函数声明，并使其执行在任何代码之前可用（可以访问）。至于函数表达式，只有在解析器执行到它锁在的代码，才会真正被解析。
+解析器在向执行环境中加载数据时，对函数声明和函数表达式并非一视同仁。解析器会率先读取函数声明，并使其执行在任何代码之前可用（可以访问）。至于函数表达式，只有在解析器执行到它锁在的代码，才会真正被解析。
 
 	alert(sum(10,10));//20
 	function sum(num1,num2){
@@ -91,27 +91,17 @@ tags: [test, jekyll, welcome]
 
 因为在js中函数名本身就是变量，所以函数也可以作为值来使用，也就是说，不仅可以像传递参数一样把一个函数传递给另一个函数，而且可以将一个函数作为另一个函数的结果返回
 
-请看下面的例子:
-
-	//callSomeFunction函数接受两个参数，第一个参数是一个函数指针，第二个参数是
-	//要传递给第一个参数的参数
-	function callSomeFunction(someFunction,someArgument){
-		return someFunction(someArgument);
+	function fc2(f,n){
+		return f(n);
 	}
-	function add(num){
-		return num+10;
+	function fc1(n){
+		return n+10;
 	}
-	var result1=callSomeFunction(add10,10);
-	alert(result1);//10
-
-	function getGreeting(name){
-		return "Hello,"+name;
-	}
-	var result2=callSomeFunction(getGreeting,"cherry");
-	alert(result2);//Hello,cherry;
+	var c1=fc2(fc1,10);
+	console.log(c1);
 
 
-当然也可以从一个函数中返回另一个函数
+可以从一个函数中返回另一个函数
 
 ###函数内部属性###
 
@@ -125,7 +115,6 @@ arguments对象只是与数组类似，并不是数组，可以使用方括号�
 
 arguments对象还有一个叫callee的属性，该属性是一个指针，指向拥有这个arguments对象的函数。
 
-请看下面的这段代码：
 
 	function factorial(num){
 		if(num<=1){
