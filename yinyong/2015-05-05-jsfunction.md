@@ -115,62 +115,55 @@ arguments对象只是与数组类似，并不是数组，可以使用方括号�
 
 arguments对象还有一个叫callee的属性，该属性是一个指针，指向拥有这个arguments对象的函数。
 
-
-	function factorial(num){
-		if(num<=1){
+	function d1(n){
+		if(n<=1){
 			return 1;
-	}
-	else{
-		return num*factorial(num-1);
-	}
-	}
-
-
-定义阶乘函数都要用到递归算法，如上面的代码所示，在函数有名字，而且名字以后也不会变的情况下，这样定义没有问题。但是这个函数的执行与函数名factorial紧紧耦合在了一起。为了消除这种紧密耦合的现象，可以像下面这样使用arguments.cellee。
-
-	function factorial(num){
-		if(num<=1){
-			return 1;
-	}
-	else{
-		return num*arguments.callee(num-1);
-	}
-	}
-
-
-在重写后的factorial（）函数的函数体内，没有在引用函数名factorial。这样无论引用函数时使用的是什么名字，都可以保证正常完成递归调用。例如
-
-	function factorial(num){
-		if(num<=1){
-			return 1;
-		}
-		else{
-			return num*arguments.callee(num-1);
+		}else{
+			return n*d1(n-1);
 		}
 	}
-	var truefactorial=factorial;
-	factorial=function(){
-		return 0;
-	};
-	alert(truefactorial(5));//120
-	alert(factorial(5));//0
+	console.log(d1(10));//3628800
+
+
+定义阶乘函数都要用到递归算法，如上面的代码所示，在函数有名字，而且名字以后也不会变的情况下，这样定义没有问题。但是这个函数的执行与函数名factorial紧紧耦合在了一起。为了消除这种紧密耦合的现象，可以像下面这样使用arguments.callee。
+
+	function d2(n){
+		if(n<=1){
+			return 1;
+		}else{
+			return n*arguments.callee(n-1);
+		}
+	}
+	console.log(d2(10));//3628800
+
+
+在重写后的factorial（）函数的函数体内，没有在引用函数名factorial。这样无论引用函数时使用的是什么名字，都可以保证正常完成递归调用。
 
 
 ####this####
 
 函数体内的另一个特殊对象是this，this引用的是函数执行的环境对象，--或者也可以说是this值（当在全局作用域中调用函数时，this对象引用的就是window）。如下面的例子所示：
 
-	window.color="red";
-	var o={color:"blue"};
-	function saycolor(){
-		alert(this.color);
+	window.d3="red";
+	var o={d3:"blue"};
+	function d4(){
+		console.log(this.d3);
 	}
-	saycolor(); //red
-	o.saycolor=saycolor;
-	o.saycolor();//blue
+	d4();//red
+	o.d4=d4;
+	o.d4();//blue
 
+####caller####
 
-上面的代码saycolor（）是在全局作用域中定义的，它引用了this对象。由于在调用函数之前this的值并不确定，因此this会在代码执行过程中引用不同的对象，当在全局作用域中调用saycolor（）时，this引用的是全局对象window，换句话说对this.color求值，会转成对window.color求值，于是结果就返回red。而当把saycolor（）函数赋值给对象o，并调用o.saycolor（），this引用的对象是o，因此对this.color求值，会转换成对o.color求值，于是返回blue。
+	function d5(){
+		d6();
+	}
+	function d6(){
+		console.log(d6.caller);
+	}
+	d5();//function d5(){d6();}
+
+caller属性保存着调用当前函数的函数的引用
 
 ##函数属性和方法##
 
