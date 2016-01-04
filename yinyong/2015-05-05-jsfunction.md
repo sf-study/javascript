@@ -1,11 +1,20 @@
----
-layout: post
-title:  "js引用类型function"
-category: Javascript
-tags: [test, jekyll, welcome]
----
+##目录
+
+[函数定义](#a1)
+
+[没有重载](#a2)
+
+[区分函数声明与函数表达式](#a6)
+
+[作为值的函数](#a3)
+
+[函数内部属性](#a4)
+
+[函数属性和方法](#a5)
 
 在js中，函数是对象，函数名是指针。每个函数都是function类型的实例，而且与其他引用类型一样具有属性和方法。由于函数是对象，因此函数名实际上也是一个指向对象的指针，不会与某个函数绑定
+
+<a name="a1"></a>
 
 ##函数定义##
 
@@ -52,8 +61,9 @@ tags: [test, jekyll, welcome]
 	//设置sum为null，“断绝与函数的关系”，仍然可以访问anotherSum。
 	alert(anotherSum(10,10));
 
+<a name="a6"></a>
 
-###区分函数声明与函数表达式 ###
+##区分函数声明与函数表达式 ##
 
 解析器在向执行环境中加载数据时，对函数声明和函数表达式并非一视同仁。解析器会率先读取函数声明，并使其执行在任何代码之前可用（可以访问）。至于函数表达式，只有在解析器执行到它锁在的代码，才会真正被解析。
 
@@ -73,6 +83,8 @@ tags: [test, jekyll, welcome]
 
 上面的代码会在运行期间报错，原因在于函数位于一个初始化语句中，而不是一个函数声明。换句话说，在执行到函数锁在的语句之前，变量sum中不会保存有对函数的引用；而且由于第一行代码就会报错：“unexpected identitier”(意外标识符)，实际上也不会执行到下一行。
 
+<a name="a2"></a>
+
 ##没有重载##
 
 将函数名想象为指针，有助于理解js中没有重载的概念。
@@ -86,6 +98,7 @@ tags: [test, jekyll, welcome]
 	alert(sum(100,100));//1200
 	//后面的函数覆盖了前面的函数
 
+<a name="a3"></a>
 
 ##作为值的函数##
 
@@ -103,7 +116,9 @@ tags: [test, jekyll, welcome]
 
 可以从一个函数中返回另一个函数
 
-###函数内部属性###
+<a name="a4"></a>
+
+##函数内部属性##
 
 在函数的内部有两个特殊的对象：**arguments**和**this**
 
@@ -165,77 +180,72 @@ arguments对象还有一个叫callee的属性，该属性是一个指针，指�
 
 caller属性保存着调用当前函数的函数的引用
 
+<a name="a5"></a>
+
 ##函数属性和方法##
 
 Javascript中的函数是对象，因此函数也有属性和方法，每个函数都包含两个属性length和prototype，其中length属性表示函数希望接受到的参数个数。
 
-例如：
-
-	function sum(){
-		alert(sum.length);//0
+	function e1(s){
+		console.log("e1函数");
 	}
-	sum();
+	console.log(e1.length);//1
 
 
 Javascript核心所定义的全部属性中，最耐人寻味的就是prototype属性，对于Javascript中的引用类型而言prototype是保存他们所以实例方法的真正所在，换句话说诸如toString（）和valueOf（）等方法其实都是保存在prototype名下，只不过是通过各自对象的实例访问罢了。创建自定义引用类型以及实现继承的时候，prototype的属性是极为重要的，后面的文章中将作出详细介绍。prototype属性是不可枚举的，因此使用for-in语句无法发现。
 
+
+
 每个函数都包含两个非继承而来的方法：apply（）和call（）。这两个方法都是在特定的作用域中调用函数，实际上等同于设置函数体内的this对像的值。首先apply（）方法接受两个参数：一个是在其中运行函数的作用域，另一个是参数数组。第二个参数可以是Array实例，也可以是arguments对象。
 
-	function sum(num1,num2) {
-		return num1 + num2;
+	function e2(n1,n2){
+		return n1+n2;
 	}
-	function callsum1(num1,num2) {
-		return sum.apply(this, arguments);
-		//设置sum函数的this值为callsum1（）函数的作用域
-		//并传入arguments对象作为参数
+	function callE2(n1,n2){
+		return e2.apply(this,arguments);
 	}
-	function callsum2(num1,num2) {
-		return sum.apply(this, [num1, num2]);
-		//设置sum函数的this值为callsum2（）函数的作用域
-		//并传入数组作为参数
+	function callE3(n1,n2){
+		return e2.apply(this,[n1,n2]);
 	}
-	alert(callsum1(10, 10));
-	//20
-	alert(callsum2(10, 10));
-	//20
+	console.log(callE2(10,10));//20
+	console.log(callE3(10,10));//20
 
 
 
 call（）方法与apply（）方法的作用相同，区别仅在于接受参数的方式不同，对于call（）函数而言，接受的第一个参数是this值，没有变化，变化的是其余参数都是直接传递给函数。换句话说，在使用call（）方法的时候，传递给函数的参数必须逐个列举出来：
 
-	function sum(num1,num2){
-		return num1+num2;
+	function callE4(n1,n2){
+		return e2.call(this,n1,n2);
 	}
-	function callsum(num1,num2){
-		return sum.call(this,num1,num2);
-	}
-	alert(callsum(10,10));//20
+	console.log(callE4(10,10));//20
 
-
-在使用call（）方法的情况下，callsum（）必须明确的传入每一个参数。结果与使用apply（）没有什么不同。至于使用call（）还是apply（）方法，完全取决于你决定采用那种给函数传递参数的方式最方便。
+使用call（）还是apply（）方法，完全取决于采用那种给函数传递参数的方式最方便。
 
 事实上，传递参数并非call（）和apply（）真正的用武之地，他们真正强大的地方是能够扩充函数赖以运行的作用域，请看下面的例子：
 
-	window.color="red";
-	var o={color:"blue"};
-	//在全局作用域中定义函数saycolor()
-	function saycolor(){
-		alert(this.color);
+	window.e3="red";
+	var fe4={e3:"blue"};
+	function fe5(){
+		console.log(this.e3);
 	}
-	saycolor.call(this);//red,saycolor（）函数的作用域是当前作用域，即window
-	saycolor.call(window);//red，saycolor（）函数的作用域为window
-	saycolor.call(o);//blue，saycolor（）函数作用域为o
+	fe5.call(this);//red
+	fe5.call(window);//red
+	fe5.call(fe4);//blue
 
 
 
-javascript中还定义了一个方法：bind（）。这个方法会创建一个函数的实例，其this值会被绑定到传给bind（）函数的值。例如：
+javascript中还定义了一个方法：bind（）。这个方法会创建一个函数的实例，其this值会被绑定到传给bind（）函数的值
 
-	window.color="red";
-	var 0={color:"red"};
-	function saycolor(){
-		alert(this.color);
+	window.e6="666";
+	var fe7={
+		e6:"888"
+	};
+	function fe8(){
+		console.log(this.e6);
 	}
-	var objectsaycolor=saycolor.bind(o);
-	//创建saycolor()函数的实例，并将其赋值给objectsaycolor
-	//，并把o对象传递给bind（）函数，objectsaycolor（）函数的this值等于o
-	objectsaycolor();//blue
+	var e9=fe8.bind(fe7);
+	e9();//888
+
+ie9+,firefox4+,safari5.1+,opera12+,chrome
+
+valueOf()方法返回函数代码
