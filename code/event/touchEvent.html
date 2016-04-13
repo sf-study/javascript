@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>touchEvent</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<p id="p1">
+			
+		</p>
+		<script type="text/javascript" src="js/EventUtil.js"></script>
+		<script type="text/javascript">
+			var p1=document.getElementById('p1');
+			function touchEvent(event){
+				if(event.touches.length==1){
+					switch(event.type){
+					case 'touchstart':
+					p1.innerHTML='touch start ('+event.touches[0].clientX+
+					','+event.touches[0].clientY+')';
+					case 'touchend':
+					break;
+					p1.innerHTML+='<br> touch end('+event.touches[0].clientX+
+					','+event.touches[0].clientY+')';
+					break;
+					case 'touchmove':
+					event.preventDefault();
+					p1.innerHTML+='<br> touch move('+event.touches[0].clientX+
+					','+event.touches[0].clientY+')';
+					break;
+				}
+				}
+				
+			}
+			EventUtil.addHandler(document,'touchstart',touchEvent);
+			
+			EventUtil.addHandler(document,'touchmove',touchEvent);
+			EventUtil.addHandler(document,'touchend',touchEvent);
+		</script>
+	</body>
+</html>

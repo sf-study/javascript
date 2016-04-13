@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>xmlc1</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<script type="text/javascript">
+            /*
+             * 创建一个空的xml文档
+             */
+            var xmldom = document.implementation.createDocument('', 'root', null);
+            console.log('name of xmldom is:' + xmldom.documentElement.tagName);
+            var child = xmldom.createElement('child');
+            xmldom.documentElement.appendChild(child);
+            /*
+             * xml解析为DOM文档
+             * parseFromString（）该方法返回的是一个document实例
+             * ie9,safari,chrome,firefox,opera
+             */
+            var parser = new DOMParser();
+            var xmldom2 = parser.parseFromString('<root><child></child></root>', 'text/xml');
+            console.log('name of xmldom2 is:' + xmldom2.documentElement.tagName);
+            console.log('xmldom2 firstChild is:' + xmldom2.documentElement.firstChild.tagName);
+            var anotherchild = xmldom2.createElement('child');
+            xmldom2.documentElement.appendChild(anotherchild);
+            var child2 = xmldom2.getElementsByTagName('child');
+            console.log('xmldom2 child length:' + child2.length);
+
+            var parser3 = new DOMParser(), xmldom3, errors3;
+            try {
+                xmldom3 = parser3.parseFromString('<root>', 'text/xml');
+                errors3 = xmldom3.getElementsByTagName('parsererror');
+                if (errors3.length > 0) {
+                    throw new Error('parser error');
+                }
+
+            } catch (e) {
+                console.log('parser error!!');
+            }
+
+            /*
+             * 序列化DOM文档
+             * ie9,safari,chrome,firefox,opera
+             * serializeToString(),返回字符串
+             */
+            var serializer = new XMLSerializer();
+            var xml = serializer.serializeToString(xmldom);
+            console.log(xml);
+
+            
+		</script>
+	</body>
+</html>

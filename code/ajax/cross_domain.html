@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1">
+		<title>cross_domain</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+	</head>
+
+	<body>
+		<form name="form">
+			<input type="button" value="ie8浏览器跨域请求测试" onclick="ied()" />
+			<br/><br/><br/>
+			<input type="button" value="其他浏览器跨域请求测试" onclick="ot()" />
+		</form>
+		<script type="text/javascript">
+            /*
+             * ie8浏览器跨域请求,只支持异步请求
+             */
+            function ied() {
+                var xdr = new XDomainRequest();
+                xdr.onload = function() {
+                    alert(xdr.responseText);
+                };
+                xdr.onerror = function() {
+                    alert("Error!");
+                };
+
+                //you'll need to replace this URL with something that works
+                xdr.open("get", "http://am.sh18w.com/x6.php");
+                xdr.send(null);
+            }
+            
+			/*
+             * 其他浏览器跨域请求
+             */
+            function ot() {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(event) {
+                    if (xhr.readyState == 4) {
+                        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                            alert(xhr.responseText);
+                        } else {
+                            alert("requset was unsuccessful:" + xhr.status);
+                        }
+                    }
+                };
+                xhr.open("get", "http://am.sh18w.com/x6.php", true);
+                xhr.send(null);
+            }
+		</script>
+	</body>
+</html>

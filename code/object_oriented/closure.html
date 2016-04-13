@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>obj3</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			/*
+			 * **********************
+			 * 创建闭包
+			 * **********************
+			 */
+			function of(p){
+				return function(object1,object2){
+					var value1=object1[p];
+					var value2=object2[p];
+					if(value1<value2){
+						return -1;
+					}else if(value1>calue2)
+					{
+						return 1;
+					}else{
+						return 0;
+					}
+				};
+			}
+			var a1=of("name");
+			var a2=a1({name:"aaa"},{name:"bbb"});
+			a1=null;
+			console.log(a2);//-1
+			
+			/*
+			 * ***********************
+			 * 闭包与变量
+			 * ***********************
+			 */
+			function of1(){
+				var result=new Array();
+				for(var i=0;i<10;i++){
+					result[i]=function(){
+						return i;
+					};
+				}
+				return result;
+			}
+			var a3=of1();
+			for(var i=0;i<a3.length;i++){
+				console.log(a3[i]());
+				//10，10，10，10，10，10，10，10，10，10
+			}
+			
+			//
+			function of2(){
+				var result=new Array();
+				for(var i=0;i<10;i++){
+					result[i]=function(num){
+						return function(){
+							return num;
+						};
+					}(i);
+				}
+				return result;
+			}
+			var a4=of2();
+			for(var i=0;i<a4.length;i++){
+				console.log(a4[i]());
+				//0,1,2,3,4,5,6,7,8,9
+			}
+			
+			/*
+			 * **************************
+			 * 关于this对象
+			 * **************************
+			 */
+			var b1="window";
+			var object={
+				b1:"my object",
+				getNameFunc:function(){
+					return function(){
+						return this.b1;
+					};
+				}
+			};
+			console.log(object.getNameFunc()());
+			//"window"（非严格模式下）
+			
+			//
+			var b2="window";
+			var object2={
+				b2:"my object",
+				getNameFunc:function(){
+					var that=this;
+					return function(){
+						return that.b2;
+					};
+				}
+			};
+			console.log(object2.getNameFunc()());
+			//"my object"
+			
+			/*
+			 * ********************
+			 * 模仿块级作用域
+			 * ********************
+			 */
+			function of3(count){
+				for(var i=0;i<count;i++){
+					console.log(i);//0,1,2,3,4
+				}
+				var i;
+				console.log(i);//5
+			}
+			of3(5);
+			
+			/*
+			 * *****************************
+			 * 私有变量
+			 * *****************************
+			 */
+			
+			/*
+			 * 访问私有变量的公有方法
+			 */
+			function Of4(){
+				//私有变量和私有函数
+				var pv=10;
+				function pvf(){
+					return "私有函数";
+				}
+				//特权方法
+				this.pbm=function(){
+					pv++;
+					return pvf();
+				};
+			}
+			var c1=new Of4();
+			console.log(c1.pbm());//"私有函数"
+			
+			/*
+			 * 静态私有变量
+			 */
+			(function(){
+				//私有变量和私有函数
+				var pv=10;
+				function pvf(){
+					return "私有函数";
+				}
+				//构造函数
+				//此处没有使用函数声明和var关键字,创建了全局变量
+				MyObject=function(){
+					
+				};
+				//特权方法
+				MyObject.prototype.pbm=function(){
+					pv++;
+					return pvf();
+				};
+			})();
+			var c2=new MyObject();
+			console.log(c2.pbm());//"私有函数"
+			
+			/*
+			 * 模块模式
+			 */
+			var of5=function(){
+				//私有变量和私有函数
+				var pv=10;
+				function pvf(){
+					return "私有函数";
+				}
+				//特权方法
+				return {
+					pp:"公有变量",
+					pbm:function(){
+						pv++;
+						return pvf();
+					}
+				};
+			}();
+			
+			/*
+			 * 增强的模块模式
+			 */
+			var of6=function(){
+				//私有变量和私有函数
+				var pv=10;
+				function pvf(){
+					return "私有函数";
+				}
+				//创建对象
+				var object=new CustomType();
+				//特权方法
+				object.pp="公有变量";
+				object.pm=function(){
+					pv++;
+					return pvf();
+				};
+				return object;
+			}();
+		</script>
+	</body>
+</html>

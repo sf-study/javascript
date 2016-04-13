@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IE XPath Example</title>
+        <script type="text/javascript" src="js/crossbrowserXML.js"></script>       
+    </head>
+    <body>
+        <p>This example gets the first node matching the expression <code>employee/name</code>.</p>
+        <script type="text/javascript">
+            var xmldom = parseXml();
+            var element = xmldom.documentElement.selectSingleNode("/a/b");
+            alert(element.xml);
+            
+        </script>
+ 
+ 
+    </body>
+</html>

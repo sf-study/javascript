@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>testArrray</title>
+		<meta name="description" content="">
+		<meta name="author" content="xinxin">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var v0 = [1, 2, 3, 4, 5, 6, 7];
+			var v1 = [1, 2, 3, 4, 5, 6, 7, 8];
+			var v2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+			var v3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+			var v4 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+			var v5=[324,432,53,"dsafd"];
+
+			function test(val) {
+				var it = Math.ceil(val.length / 8);
+				var s = val.length % 8;
+				var i = 0;
+
+				function process(vi) {
+					console.log(vi);
+				}
+
+				do {
+					switch(s) {
+						case 0:
+							process(val[i++]);
+						case 7:
+							process(val[i++]);
+						case 6:
+							process(val[i++]);
+						case 5:
+							process(val[i++]);
+						case 4:
+							process(val[i++]);
+						case 3:
+							process(val[i++]);
+						case 2:
+							process(val[i++]);
+						case 1:
+							process(val[i++]);
+					}
+					s = 0;
+				} while(--it>0);
+			}
+			test(v2);
+		</script>
+	</body>
+</html>

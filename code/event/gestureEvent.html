@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>touchEvent</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<p id="p1">
+
+		</p>
+		<script type="text/javascript" src="js/EventUtil.js"></script>
+		<script type="text/javascript">
+			var p1 = document.getElementById('p1');
+			function gestureEvent(event) {
+
+				switch(event.type) {
+					case 'gesturestart':
+						p1.innerHTML = 'gesture start (rotation' + event.rotation+ ',scale' + event.scale + ')';
+					case 'gestureend':
+						break;
+						p1.innerHTML += 'gestureend start (rotation' + event.rotation+ ',scale' + event.scale + ')';
+						break;
+					case 'gesturechange':
+						event.preventDefault();
+						p1.innerHTML += 'gesturechange start (rotation' + event.rotation+ ',scale' + event.scale + ')';
+						break;
+				}
+
+			}
+
+			document.addEventListener('gesturestart',gestureEvent,false);
+			document.addEventListener('gestureend',gestureEvent,false);
+			document.addEventListener('gesturechange',gestureEvent,false);
+			// EventUtil.addHandler(document, 'gesturestart', gestureEvent);
+			// EventUtil.addHandler(document, 'gesturechange', gestureEvent);
+			// EventUtil.addHandler(document, 'gestureend', gestureEvent);
+		</script>
+	</body>
+</html>

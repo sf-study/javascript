@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>ajax1</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+	</head>
+
+	<body>
+		<form id="user-info">
+			<label for="user-name">Name:</label>
+			<input type="text" id="user-name" name="user-name" />
+			<br />
+			<label for="user-email">Email:</label>
+			<input type="text" id="user-email" name="user-email" />
+			<br />
+			<input type="button" value="提交" onclick="submitData()" />
+		</form>
+		<form id="user-info1">
+			<label for="user-name">Name:</label>
+			<input type="text" id="user-name1" name="user-name" />
+			<br />
+			<label for="user-email">Email:</label>
+			<input type="text" id="user-email1" name="user-email" />
+			<br />
+			<input type="button" value="提交" onclick="submitData1()" />
+		</form>
+		<script type="text/javascript">
+            /*
+             * FormData
+             */
+            var xhr = new XMLHttpRequest();
+            function submitData() {
+                xhr.onreadystatechange = function(event) {
+                    if (xhr.readyState == 4) {
+                        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                            alert(xhr.responseText);
+                        } else {
+                            alert("Request was unsuccessful: " + xhr.status);
+                        }
+                    }
+                };
+
+                xhr.open("post", "postexample.php", true);
+                var form = document.getElementById("user-info");
+                xhr.send(new FormData(form));
+            }
+
+			var xhr1 = new XMLHttpRequest();
+            xhr1.onreadystatechange = function(event) {
+                try {
+                    if (xhr1.readyState == 4) {
+                        if ((xhr1.status >= 200 && xhr1.status < 300) || xhr1.status == 304) {
+                            alert(xhr1.responseText);
+                        } else {
+                            alert("Request was unsuccessful: " + xhr1.status);
+                        }
+                    }
+                } catch (ex) {
+                    //assume handled by ontimeout
+                }
+            };
+
+            xhr1.open("get", "timeout.php", true);
+            xhr1.timeout = 1000;
+            xhr1.ontimeout = function() {
+                alert("Request did not return in a second.");
+            };
+            xhr1.send(null);
+		</script>
+	</body>
+</html>

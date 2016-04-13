@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>test</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<script type="text/javascript"> 
+			try{
+				eval('a+b');
+				var a=new Array(-20);
+				
+			}catch (error){
+				/*
+				 * message属性保存错误的信息
+				 * name属性保存错误的类型（opera9一下不支持该属性）
+				 */
+				alert(error.message);
+				alert(error.name);
+			}
+		</script>
+	</body>
+</html>

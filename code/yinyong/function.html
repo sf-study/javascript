@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>function</title>
+		
+	</head>
+
+	<body>
+		<h1>function</h1>	
+		<script type="text/javascript">
+			/*
+			 * 定义函数
+			 */
+			function fa1(n1,n2){
+				return n1+n2;
+			}
+			var fa2=function(n1,n2){
+				return n1+n2;
+			};
+			var fa3=Function("n1","n2","return n1+n2");
+			/*
+			 * 函数声明与函数表达式
+			 */
+			console.log(fb1(3,3));
+			function fb1(n1,n2){
+				return n1+n2;
+			}
+			/*
+			 * 做为值的函数
+			 */
+			function fc2(f,n){
+				return f(n);
+			}
+			function fc1(n){
+				return n+10;
+			}
+			var c1=fc2(fc1,10);
+			console.log(c1);
+			
+			function fc3(pn){
+				return function(obj1,obj2){
+					var v1=obj1[pn];
+					var v2=obj2[pn];
+					if(v1<v2){
+						return -1;
+					}else if(v1>v2){
+						return 1;
+					}else{
+						return 0;
+					}
+				};
+			}
+			var c2=[{name:"xinxin",age:22},{name:"cccc",age:28}];
+			console.log(c2[0].name);
+			fc3(c2[name]);
+			
+			/*
+			 * 函数内部属性
+			 */
+			function d1(n){
+				if(n<=1){
+					return 1;
+				}else{
+					return n*d1(n-1);
+				}
+			}
+			console.log(d1(10));//3628800
+			
+			function d2(n){
+				if(n<=1){
+					return 1;
+				}else{
+					return n*arguments.callee(n-1);
+				}
+			}
+			console.log(d2(10));//3628800
+			
+			window.d3="red";
+			var o={d3:"blue"};
+			function d4(){
+				console.log(this.d3);
+			}
+			d4();//red
+			o.d4=d4;
+			o.d4();//blue
+			
+			function d5(){
+				d6();
+			}
+			function d6(){
+				console.log(d6.caller);
+			}
+			d5();//function d5(){d6();}
+			/*
+			 * 函数属性和方法
+			 */
+			function e1(s){
+				console.log("e1函数");
+			}
+			console.log(e1.length);//1
+			
+			function e2(n1,n2){
+				return n1+n2;
+			}
+			function callE2(n1,n2){
+				return e2.apply(this,arguments);
+			}
+			function callE3(n1,n2){
+				return e2.apply(this,[n1,n2]);
+			}
+			console.log(callE2(10,10));//20
+			console.log(callE3(10,10));//20
+			
+			function callE4(n1,n2){
+				return e2.call(this,n1,n2);
+			}
+			console.log(callE4(10,10));//20
+			
+			window.e3="red";
+			var fe4={e3:"blue"};
+			function fe5(){
+				console.log(this.e3);
+			}
+			fe5.call(this);//red
+			fe5.call(window);//red
+			fe5.call(fe4);//blue
+			
+			window.e6="666";
+			var fe7={
+				e6:"888"
+			};
+			function fe8(){
+				console.log(this.e6);
+			}
+			var e9=fe8.bind(fe7);
+			e9();//888
+		</script>	
+	</body>
+</html>

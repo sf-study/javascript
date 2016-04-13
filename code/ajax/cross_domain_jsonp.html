@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>cross_domain_jsonp</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function handleResponse(response){
+				alert("you are at IP address"+response.ip+",witch is in"+response.sity+","+response.region_name);
+			}
+			var script=document.createElement("script");
+			script.src="http://freegeoip.net/json/?callback=handleResponse";
+			document.body.insertBefore(script,document.body.firstChild);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<b:books xmlns:b='http://192.168.0.116/'>
+	<b:book>
+		<b:title>
+			javascript
+		</b:title>
+		<b:author>
+			lily
+		</b:author>
+	</b:book>
+	<b:book>
+		<b:title>
+			css
+		</b:title>
+		<b:author>
+			lily1
+		</b:author>
+		<b:author>
+			lily2
+		</b:author>
+		<b:author>
+			lily3
+		</b:author>
+	</b:book>
+</b:books>
