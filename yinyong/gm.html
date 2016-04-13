@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>gm</title>
+	</head>
+
+	<body>
+		<h1>单体内置对象</h1>
+		<script type="text/javascript">
+			var a1="http://www.wrox.com/illegal value.html#start";
+			console.log(encodeURI(a1));
+			//http://www.wrox.com/illegal%20value.html#start
+			console.log(encodeURIComponent(a1));
+			//http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.html%23start
+			var a2="http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.html%23start";
+			console.log(decodeURI(a2));
+			//http%3A%2F%2Fwww.wrox.com%2Fillegal value.html%23start
+			console.log(decodeURIComponent(a2));
+			//http://www.wrox.com/illegal value.html#start
+			
+			var b1=Math.max(3,54,32,16);
+			console.log(b1);//54
+			var b2=Math.min(3,54,32,16);
+			console.log(b2);//3
+			
+			var c1=25.9,c2=25.5,c3=25.1;
+			console.log(Math.ceil(c1));//26
+			console.log(Math.ceil(c2));//26
+			console.log(Math.ceil(c3));//26
+			
+			console.log(Math.round(c1));//26
+			console.log(Math.round(c2));//26
+			console.log(Math.round(c3));//25
+			
+			console.log(Math.floor(c1));//25
+			console.log(Math.floor(c2));//25
+			console.log(Math.floor(c3));//25
+			
+			var c1=Math.floor(Math.random()*10);
+			console.log(c1);
+			
+			
+		</script>
+	</body>
+</html>

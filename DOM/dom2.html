@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>dom1</title>
+	</head>
+	<body>
+		<div id="div1">
+			test1111
+		</div>
+		<script type="text/javascript">
+			var div1=document.getElementById("div1");
+			console.log(div1.tagName);//DIV
+			console.log(div1.nodeName);//DIV
+			console.log(div1.tagName===div1.nodeName);//true
+		</script>
+		
+		<div id="div2-ID" class="div2-className" title="div2-title">
+			div2
+		</div>
+		<script type="text/javascript">
+			var div2=document.getElementById("div2-ID");
+			console.log(div2.id);//div2-ID
+			console.log(div2.title);//div2-title
+			console.log(div2.className);//div2-className
+			div2.id="div2-id-id";
+			console.log(div2.id);//div2-id-id
+		</script>
+		
+		<div id="div3" style="color: red;background-color: #000;">
+			div3文本
+		</div>
+		<script type="text/javascript">
+			var div3=document.getElementById("div3");
+			console.log(div3.style);
+			var a1=div3.getAttribute("style");//objectCSSStyleDeclaration {0: "color", 1: "background-color", alignContent: "", alignItems: "", alignSelf: "", alignmentBaseline: "", all: ""…}
+			console.log(a1);//color: red;background-color: #000;
+		</script>
+		
+		<div id="div4" onclick="console.log('点击！！！')">
+			div4 shijian
+		</div>
+		<script type="text/javascript">
+			var div4=document.getElementById("div4");
+			console.log(div4.onclick);//function onclick(event) {console.log('点击！！！')}
+			console.log(div4.getAttribute("onclick"));//console.log('点击！！！')
+		</script>
+		
+		<div id="div5" title="div5-title" class="div5-class">
+			attribute
+		</div>
+		<script type="text/javascript">
+			var div5=document.getElementById("div5");
+			console.log(div5.attributes.getNamedItem("id").nodeValue);//div5
+			console.log(div5.attributes["id"].nodeValue);//div5
+			console.log(div5.attributes["title"].nodeValue);//div5-title
+			div5.attributes["title"].nodeValue="title";
+			console.log(div5.attributes["title"].nodeValue);//title
+			
+			var a2=div5.attributes.removeNamedItem("class");
+			console.log(a2);//div5-class
+			
+			div5.attributes.setNamedItem(a2);
+		</script>
+		
+		<div id="div6" class="div6-class" title="div6-title" data-url="div6-url">
+			遍历元素特性
+		</div>
+		<script type="text/javascript">
+			function outputAttribute(element){
+				var pairs=new Array(),
+				attrName,
+				attrValue,
+				i,len;
+				for(i=0,len=element.attributes.length;i<len;i++){
+					attrName=element.attributes[i].nodeName;
+					attrValue=element.attributes[i].nodeValue;
+					if(element.attributes[i].specified){
+						pairs.push(attrName+"=\""+attrValue+"\"");
+					}
+				}
+				return pairs.join(" ");
+			}
+			var div6=document.getElementById("div6");
+			console.log(outputAttribute(div6));//id="div6" class="div6-class" title="div6-title" data-url="div6-url"
+		</script>
+		<script type="text/javascript">
+			var div7=document.createElement("div");
+			div7.id="div7";
+			div7.className="div7-class";
+			div6.appendChild(div7);
+		</script>
+		
+		<!--text类型-->
+		<p id="p1">
+			p1p1p1p1
+		</p>
+		<script type="text/javascript">
+			var p1=document.getElementById("p1");
+			console.log(p1.firstChild.nodeType);//3
+			console.log(p1.firstChild.nodeName);//#text
+			console.log(p1.firstChild.nodeValue);//p1p1p1p1,包括空格
+			console.log(p1.firstChild.data);//p1p1p1p1,包括空格
+			console.log(p1.firstChild.parentNode);//<p id="p1">p1p1p1p1</p>
+		</script>
+		<p id="p2">
+			p2p2p2p2
+		</p>
+		<script type="text/javascript">
+			var p2=document.getElementById("p2");
+			p2.firstChild.appendData("add text");
+			p2.firstChild.deleteData(1,1);
+			p2.firstChild.insertData(0,"add text222");
+			p2.firstChild.replaceData(1,3,"lalala");
+			console.log(p2.firstChild.splitText(10));
+			console.log(p2.firstChild.substringData(1,10));
+		</script>
+		
+		<p id="p3">
+			p3
+		</p>
+		<script type="text/javascript">
+			var p3=document.getElementById("p3");
+			console.log(p3.firstChild.length);//9，包括空格
+			console.log(p3.firstChild.nodeValue.length);//9
+			console.log(p3.firstChild.data.length);//9
+		</script>
+		<div id="div8">
+			创建文本节点
+		</div>
+		<script type="text/javascript">
+			var div8=document.getElementById("div8");
+			var textNode=document.createTextNode("新创建的文本节点");
+			div8.appendChild(textNode);
+		</script>
+		<div id="div9"></div>
+		<script type="text/javascript">
+			var div9=document.getElementById("div9");
+			var textNode1=document.createTextNode("新创建的文本节点1");
+			div9.appendChild(textNode1);
+			var textNode2=document.createTextNode("新创建的文本节点2");
+			div9.appendChild(textNode2);
+			console.log(div9.childNodes.length);//2
+			div9.normalize();
+			console.log(div9.childNodes.length);//1
+		</script>
+		<div id="div10"><!-- 测试注释节点 --></div>
+		<script type="text/javascript">
+			var div10=document.getElementById("div10");
+			var comment=div10.firstChild;
+			console.log(comment.nodeType);//8
+			console.log(comment.data);//测试注释节点
+		</script>
+		
+		<!-- DocumentType类型 -->
+		<div id="div11">
+			doctype
+		</div>
+		<script type="text/javascript">
+			console.log(document.doctype.name);//html
+		</script>
+		<ul id="ul1">
+			
+		</ul>
+		<script type="text/javascript">
+			var fragment=document.createDocumentFragment();
+			var ul1=document.getElementById("ul1");
+			var li=null;
+			
+			for(var i=0;i<3;i++){
+				li=document.createElement("li");
+				li.appendChild(document.createTextNode("item"+(i+1)));
+				fragment.appendChild(li);
+			}
+			ul1.appendChild(fragment);
+		</script>
+	</body>
+</html>

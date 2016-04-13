@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>dom1</title>
+	</head>
+
+	<body>
+		<div id="div1" style="background-color: blue;width: 200px;height: 200px;"> </div>
+		<script type="text/javascript">
+			var a1=document.getElementsByTagName("html")[0];
+			var a2=document.getElementsByTagName("body")[0];
+			var a3=document.getElementById("div1");
+			console.log(a1.nodeType);//1
+			console.log(a2.nodeType);//1
+			console.log(a3.nodeType);//1
+		</script>
+		<div id="div2">abcdefg </div>
+		<script type="text/javascript">
+			var b1=document.getElementById("div2");
+			console.log(b1.nodeName);//DIV
+			console.log(b1.nodeValue);//null
+		</script>
+		<div id="div3" style="background-color: red;width: 100px;height: 100px;"></div>
+		<script type="text/javascript">
+			var c1=document.getElementById("div3");
+			a3.appendChild(c1);
+		</script>
+		<ul style="background-color: red;width: 100px;height: 100px;" id="ul1">
+			<li>111</li>
+			<li>222</li>
+			<li>333</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		var body=document.getElementsByTagName("body")[0];
+		var childnode=body.childNodes;
+		console.log(childnode.length);
+		console.log(childnode[9]);
+		
+		console.log(body.parentNode);
+		
+		var x1=document.getElementById("ul1");
+		var x2=x1.cloneNode(false);
+		var x3=x1.cloneNode(true);
+		body.appendChild(x2);
+		body.appendChild(x3);
+	</script>
+</html>

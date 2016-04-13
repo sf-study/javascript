@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>obj3</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			/*
+			 * **************
+			 * 定义函数的两种方式
+			 * ***************
+			 */
+			function functionName(arg1,arg2){
+				//函数体
+			}
+			console.log(functionName.name);//functionName
+			
+			var functionName=function(arg1,arg2){
+				//函数体
+			};
+			
+			/*
+			 * **********************
+			 * 递归
+			 * **********************
+			 */
+			function dd(num){
+				if(num<=1){
+					return 1;
+				}else{
+					return num*dd(num-1);
+				}
+			}
+			console.log(dd(10));//3628800
+		</script>
+	</body>
+</html>

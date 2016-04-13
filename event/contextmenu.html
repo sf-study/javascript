@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>contextmenu</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		<script type="text/javascript" src="js/EventUtil.js"></script>
+	</head>
+
+	<body>
+		<div id="mydiv">
+			单击右键打开菜单
+		</div>
+		<ul id="ul" style="position: absolute;visibility: hidden;background-color:silver ">
+			<li>
+				<a href="test1.html">连接</a>
+			</li>
+			<li>
+				<a href="test2.html">连接</a>
+			</li>
+			<li>
+				<a href="test3.html">连接</a>
+			</li>
+		</ul>
+		
+		<!-- <script type="text/javascript" src="js/client.js"></script> -->
+		<script type="text/javascript">
+			EventUtil.addHandler(window,'load',function(event){
+				var div=document.getElementById('mydiv');
+				
+				EventUtil.addHandler(div,'contextmenu',function(event){
+					event=EventUtil.getEvent(event);
+					EventUtil.preventDefault(event);
+					
+					var menu=document.getElementById('ul');
+					menu.style.left=event.clientX+'px';
+					menu.style.top=event.clientY+'px';
+					menu.style.visibility = "visible";
+				});
+				EventUtil.addHandler(document,'click',function(event){
+					document.getElementById('ul').style.visibility='hidden';
+				});
+			});
+			// EventUtil.addHandler(window,'beforeunload',function(event){
+				// event=EventUtil.getEvent(event);
+				// var mes='是否离开？';
+				// event.returnValue=mes;
+				// return mes;
+			// });
+			EventUtil.addHandler(document,'DOMContentLoaded',function(event){
+				alert('content loaded');
+			});
+		</script>
+	</body>
+</html>

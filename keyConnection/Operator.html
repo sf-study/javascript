@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>key1</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<h1>操作符</h1>
+		<script type="text/javascript">
+		var obj={
+				valueOf:function(){
+					return 3;
+				}
+		};
+            /*
+             * 一元操作符
+             */
+            //递增和递减操作符注意事项
+            console.log("递增和递减操作符注意事项----------------------");
+            var a0 = 123,a1=456;
+			console.log(--a0);//122
+			console.log(a1--);//456
+			
+			//递增和递减操作符求值规则
+			var b1="123";
+			var b2="sdf";
+			var b3=true;
+			var b4=false;
+			var b5=1.2;
+			var b6={
+				valueOf:function(){
+					return 3;
+				}
+			};
+			b1--;
+			b2--;
+			b3--;
+			b4--;
+			b5--;
+			b6--;
+			console.log("递增和递减操作符求值规则-------------------------------");
+			console.log("字符串123:"+b1);//122
+			console.log("字符串sdf:"+b2);//NaN
+			console.log("布尔值true:"+b3);//0
+			console.log("布尔值false:"+b4);//-1
+			console.log("浮点数1.2:"+b5);//0.199999999996
+			console.log("对象:"+b6);//2
+			
+			/*
+			 * 位操作符
+			 */
+			console.log('位操作符--------------------------');
+			var c1=25;
+			var c2="a";
+			console.log("普通数字25："+~c1);
+			console.log("非数字a："+~c2);
+			console.log("无穷大Infinity："+~Infinity);
+			
+			/*
+			 * 布尔操作符
+			 */
+			//逻辑非操作符操作规则
+			console.log("逻辑非操作符操作规则-------------------");
+			console.log("对象:"+!Object);//false
+			console.log("空字符串:"+!"");//true
+			console.log("非空字符串:"+!"123");//false
+			console.log("0:"+!0);//true
+			console.log("2:"+!2);//false
+			console.log("null:"+!null);//true
+			console.log("NaN:"+!NaN);//true
+			console.log("undefined:"+!undefined);//true
+			
+			//逻辑与操作符操作规则
+			var d1={},d2=1,d3=null,d4=NaN,d5=undefined;
+			console.log("逻辑与操作符操作规则----------------------");
+			console.log("第一个操作数是对象:"+(d1&&d2));
+			console.log("第二个操作数是对象,第一个操作时求值为true:"+(d2&&d1));
+			console.log("第二个操作数是对象,第一个操作时求值为false:"+(false&&d1));
+			console.log("两个操作数都是对象:"+(d1&&Object));
+			console.log("有一个操作数是null:"+(true&&null));
+			console.log("有一个操作数是NaN:"+(true&&NaN));
+			console.log("又一个操作数是undefined:"+(true&&undefined));
+			
+			/*
+			 * 乘性操作符
+			 * 乘法，除法，求模
+			 */
+			//乘法符号计算规则
+			var e1=12*12;
+			var e2=Infinity*NaN;
+			var e3=Infinity*0;
+			var e4=Infinity*-1;
+			var e5=Infinity*Infinity;
+			var e6="123"*12;
+			console.log("乘法符号计算规则----------------------");
+			console.log("操作数是数值:"+e1);//144
+			console.log("有一个操作数是NaN:"+e2);//NaN
+			console.log("Infinity与0相乘:"+e3);//Infinity
+			console.log("Infinity与非0相乘:"+e4);//-Infinity
+			console.log("Infinity与Infinity相乘:"+e5);//Infinity
+			console.log("如果又一个操作数不是数值:"+e6);//1476
+			
+			//除法操作符 计算规则
+			var g1=12/3;
+			var g2=NaN/3;
+			var g3=Infinity/Infinity;
+			var g4=0/0;
+			var g5=123/0;
+			var g6=Infinity/123;
+			var g7="123"/2;
+			console.log("除法操作符 计算规则----------------------");
+			console.log("如果两个操作数都是数值:"+g1);//4
+			console.log("如果有一个数是NaN:"+g2);//NaN
+			console.log("Infinity被Infinity除:"+g3);//NaN
+			console.log("0被0除:"+g4);//NaN
+			console.log("非0的有限数被0除:"+g5);//Infinity
+			console.log("如果是Infinity被任何非0数值除:"+g6);//Infinity
+			console.log("如果有一个操作数不是数值:"+g7);//61.5
+			
+			//求模操作符计算规则
+			var h1=12%5;
+			var h2=Infinity%10;
+			var h3=12%0;
+			var h4=Infinity%Infinity;
+			var h5=12%Infinity;
+			var h6=0%12;
+			var h7="123"%12;
+			console.log("求模操作符计算规则-------------------------");
+			console.log("两个操作数都是数值:"+h1);//2
+			console.log("被除数是无穷大，除数是有限大的值:"+h2);//NaN
+			console.log("被除数是有限大的值，除数是0:"+h3);//NaN
+			console.log("Infinity被Infinity除:"+h4);//NaN
+			console.log("被除数是有限大的值，除数是无穷大:"+h5);//12
+			console.log("被除数是0:"+h6);0
+			console.log("如果有一个操作数不是数值:"+h7);//3
+			
+			/*
+			 * 加性操作符
+			 * 加法，减法
+			 */
+			//加法操作符
+			var i1=NaN+1;
+			var i2=Infinity+Infinity;
+			var i3=(-Infinity)+(-Infinity);
+			var i4=(Infinity)+(-Infinity);
+			var i5=(+0)+(+0);
+			var i6=(-0)+(-0);
+			var i7=(+0)+(-0);
+			var i8="asd"+"fgh";
+			var i9="zxc"+9;
+			console.log("加法操作符计算规则-------------------------");
+			console.log("如果有一个操作数是NaN:"+i1);//NaN
+			console.log("Infinity加Infinity:"+i2);//Infinity
+			console.log("-Infinity加-Infinity:"+i3);//-Infinity
+			console.log("Infinity加-Infinity:"+i4);//NaN
+			console.log("+0加+0:"+i5);//0
+			console.log("-0加-0:"+i6);//0
+			console.log("+0加-0:"+i7);//0
+			console.log("如果两个操作数都是字符串:"+i8);//asdfgh
+			console.log("如果只有一个操作数是字符串:"+i9);//zxc9
+			//减法法操作符
+			var j1=NaN-2;
+			var j2=Infinity-Infinity;
+			var j3=(-Infinity)-(-Infinity);
+			var j4=Infinity-(-Infinity);
+			var j5=(-Infinity)-Infinity;
+			var j6=(+0)-(+0);
+			var j7=(+0)-(-0);
+			var j8=(-0)-(-0);
+			var j9="poi"-8;
+			console.log("减法法操作符计算规则-------------------------");
+			console.log("如果有一个操作数是NaN:"+j1);//NaN
+			console.log("如果是Infinity减Infinity:"+j2);//NaN
+			console.log("-Infinity减-Infinity:"+j3);//NaN
+			console.log("Infinity减-Infinity:"+j4);//Infinity
+			console.log("-Infinity减Infinity:"+j5);//-Infinity
+			console.log("+0减+0:"+j6);//0
+			console.log("+0减-0:"+j7);//0
+			console.log("-0减-0:"+j8);//0
+			console.log("如果有一个操作数是字符串:"+j9);//NaN
+			
+			/*
+			 * 关系操作符
+			 * (<,>,<=,>=)
+			 */
+			var k1=NaN>0;
+			var k2=7>0;
+			var k3="23"<"3";
+			var k4="a"<3;
+			var k5=obj>1;
+			var k6=true>0;
+			console.log("关系操作符使用规则--------------------------------------");
+			console.log("如果有一个操作数是NaN:"+k1);//false
+			console.log("两个操作时都是数值:"+k2);//true
+			console.log("两个操作数都是字符串:"+k3);//true
+			console.log("如果一个操作数是数值:"+k4);//false
+			console.log("如果一个操作数是对象:"+k5);//true
+			console.log("如果一个操作数是布尔值:"+k6);//true
+			
+			/*
+			 * 相等操作符
+			 */
+			//相等和不相等
+			var l1=3,l2="dsf",l3="gh",l4=true,l5=NaN,l6=false;
+			function xiangdeng(a1,a2){
+				alert(a1==a2);
+				alert(a1!=a2);
+			}
+			/*
+			 * 条件操作符
+			 */
+			l1=(1>2)?"ok":"okey";
+			console.log(l1);
+			/*
+			 * 赋值操作符
+			 */
+			/*
+			 * 逗号操作符
+			 */
+			 var m1=(1,2,6,9,10);
+			 console.log(m1);
+		</script>
+		<form>
+			<input type="button" value="两个操作数都是布尔值,true,false" onclick="xiangdeng(l4,l5)" /><br /><br />
+			<input type="button" value="一个操作数是字符串，另一个操作数是数值,'dsf',3" onclick="xiangdeng(l2,l1)" /><br /><br />
+			<input type="button" value="一个操作数是对象，另一个操作数不是,obj3,3" onclick="xiangdeng(obj,l1)" /><br /><br />
+			<input type="button" value="null比较undefined" onclick="xiangdeng(null,undefined)" /><br /><br />
+			<input type="button" value="如果一个操作数是NaN" onclick="xiangdeng(NaN,l1)" /><br /><br />
+			<input type="button" value="如果两个操作数都是NaN" onclick="xiangdeng(NaN,NaN)" /><br /><br />
+			<input type="button" value="两个操作数都是对象,obj,obj" onclick="xiangdeng(obj,obj)" /><br /><br />
+			<input type="button" value="如果两个操作数都是字符串,dsf,gh" onclick="xiangdeng(l2,l3)" /><br /><br />
+		</form>
+		
+	</body>
+</html>

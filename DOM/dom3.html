@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>dom3</title>
+		<meta name="description" content="">
+	</head>
+
+	<body>
+		<h1> 动态加载脚本 </h1>
+		<!-- 动态加载外部js文件 -->
+		<h2 onclick="loadScript('js/js1.js')">点击这里，加载外部脚本</h2>
+		<script type="text/javascript">
+            function loadScript(url) {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = url;
+                document.body.appendChild(script);
+            }
+		</script>
+		<!-- 动态加载内联js代码 -->
+		<h2 onclick="loadScript1()">点击这里，加载内联js代码</h2>
+		<script type="text/javascript">
+            function alt() {
+                alert('成功加载内联js代码');
+            }
+
+            function loadScript1() {
+                var script1 = document.createElement("script");
+                script1.type = "text/javascript";
+                try {
+                    script1.appendChild(document.createTextNode("alt()"));
+                } catch(ex) {
+                    script1.text = "alt()";
+                }
+
+                document.body.appendChild(script1);
+            }
+		</script>
+		
+		<h1>动态加载样式</h1>
+		<!-- 加载外部动态样式 -->
+		<h2 onclick="loadStyle1()">点击加载外部动态样式</h2>
+		<script type="text/javascript">
+            function loadStyle1() {
+                var link = document.createElement("link");
+                link.rel = "stylesheet";
+                link.href = "css/css1.css";
+                var head = document.getElementsByTagName("head")[0];
+                head.appendChild(link);
+            }
+		</script>
+		<!-- 加载内联动态样式 -->
+		<h2 onclick="loadStyle2()">加载内联动态样式</h2>
+		<script type="text/javascript">
+			function loadStyle2(){
+				var style=document.createElement("style");
+				style.type="text/css";
+				try{
+					style.appendChild(document.createTextNode("body{background:blue}"));
+				}catch(ex){
+					style.styleSheet.cssText="body{background:blue}";
+				}
+				var head1=document.getElementsByTagName("head")[0];
+				head1.appendChild(style);
+			}
+		</script>
+	</body>
+</html>

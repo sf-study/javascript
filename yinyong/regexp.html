@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>regexp</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// var expression=/pattern/flags;
+			var a1=/at/g;
+			var a2=/[bc]at/i;
+			var a3=/.at/gi;
+			
+			var b1=new RegExp("[bc]at","i");
+			
+			var b2=null,i;
+			for(i=0;i<10;i++){
+				b2=/cat/g;
+				b2.test("catasttrophe");
+			}
+			for(i=0;i<10;i++){
+				b2=new RegExp("cat","g");
+				b2.test("catasttrophe");
+			}
+			
+			/*
+			 * RegExp实例属性
+			 */
+			var c=/.at/gi;
+			console.log(c.global);
+			
+			/*
+			 * RegExp实例方法
+			 */
+			//exec()
+			var c="mom and dad and baby";
+			var c1=/mom (and dad (and baby)?)?/gi;
+			//()表示，查找任何指定的选项。
+			var c2=c1.exec(c);
+			console.log(c2.index);//0
+			console.log(c2.input);//mom and dad and baby
+			console.log(c2[1]);//and dad and baby
+			
+			var c3="aaa";
+			var c4=/bbb/gi;
+			var c5=c4.exec(c3);
+			console.log(c5);//null
+			
+			var c6="cat,bat,sat,fat";
+			var c7=/.at/;//未设置全局模式,"."表示查找单个字符，除了换行和行结束符。
+			var c8=c7.exec(c6);
+			console.log(c8.index);//0
+			console.log(c8[0]);//cat
+			var c9=c7.exec(c6);
+			console.log(c9.index);//0
+			
+			var c10=/.at/g;//设置全局模式
+			var c11=c10.exec(c6);
+			console.log(c11.index);//0
+			var c12=c10.exec(c6);
+			console.log(c12.index);//4
+			
+			//test()
+			var d="000-00-0000";
+			var d1=/\d{3}-\d{2}-\d{4}/;
+			//n{X}，表示匹配包含x个n的序列的字符串
+			if(d1.test(d)){
+				console.log("mmmm");
+			}
+			
+			//toLocaleString(),toString()
+			var e=new RegExp("\\[bc\\]at","gi");
+			var e1=/\\[cv\\]fs/gi;
+			console.log(e.toLocaleString());
+			console.log(e1.toLocaleString());
+			
+			/*
+			 * 构造函数属性
+			 */
+			var g="this has been a short summer";
+			var g1=/(.)hort/g;
+			
+			if(g1.test(g)){
+				console.log(RegExp.input);//this has been a short summer
+				console.log(RegExp.lastMatch);//short
+				console.log(RegExp.leftContext);//this has been a
+				console.log(RegExp.lastParen);//s
+				console.log(RegExp.rightContext);//summer
+				console.log(RegExp.multiline);//false
+			}
+			
+			var g2=/(.)hort/g;
+			
+			if(g2.test(g)){
+				console.log(RegExp.$_);//this has been a short summer
+				console.log(RegExp["$&"]);//short
+				console.log(RegExp["$`"]);//this has been a
+				console.log(RegExp["$+"]);//s
+				console.log(RegExp["$'"]);//summer
+				console.log(RegExp["$*"]);//false
+				console.log(RegExp.$1);//s
+			}
+			
+			
+		</script>
+	</body>
+</html>

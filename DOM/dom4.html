@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>dom4</title>
+	</head>
+
+	<body>
+		<h1>选择符API</h1>
+		<div class="div1">
+			this is div1
+		</div>
+		<script type="text/javascript">
+            var div1 = document.querySelector(".div1");
+            console.log(div1.innerHTML);
+            //this is div1
+		</script>
+
+		<ul class="ul1">
+			<li>
+				111
+			</li>
+			<li>
+				222
+			</li>
+			<li>
+				333
+			</li>
+		</ul>
+		<script type="text/javascript">
+            var ul1 = document.querySelector(".ul1");
+            var lis = ul1.querySelectorAll(".ul1 li");
+            console.log(lis[0].innerHTML);
+            //111
+            console.log(lis.item(1).innerHTML);
+            //222
+		</script>
+		<!-- 选择符二级为Element类型新增了一个方法：matchesEelector()。 -->
+		<div class="div2" id="div2">
+			this is div2
+		</div>
+		<script type="text/javascript">
+            function matchesSelector(ele, sel) {
+                if (ele.matchesSelector) {
+                    return ele.matchesSelector(sel);
+                } else if (ele.msMatchesSelector) {
+                    return ele.msMatchesSelector(sel);
+                } else if (ele.mozMatchesSelector) {
+                    return ele.mozMatchesSelector(sel);
+                } else if (ele.webkitMatchesSelector) {
+                    return ele.webkitMatchesSelector(sel);
+                } else {
+                    throw new Error('not supported');
+                }
+            }
+            
+            var div2 = document.querySelector(".div2");
+            if(matchesSelector(div2,"#div2")){
+            	console.log(div2.innerHTML);//this is div2
+            }
+		</script>
+		
+		<!-- 
+			//html5 
+			//-->
+		<!-- getElementsByClassName() -->
+		<div id="div3">
+			<p class="div3_p">123</p>
+			<p class="div3_p">456</p>
+			<p class="div3_p">789</p>
+		</div>
+		<script type="text/javascript">
+			var div3=document.getElementById("div3");
+			var p3s=div3.getElementsByClassName("div3_p");
+			console.log(p3s[0].innerHTML);//123
+		</script>
+		<!-- classlist属性 -->
+		<div id="div4" class="div4 s1 s2 s3">
+			this is div4
+		</div>
+		<script type="text/javascript">
+			var div4=document.getElementById("div4");
+			var classlist=div4.classList;
+			console.log(classlist);//["div4", "s1", "s2", "s3"]
+			classlist.remove("s1");
+			console.log(classlist);//["div4", "s2", "s3"]
+			classlist.add("s4");
+			console.log(classlist);//["div4", "s2", "s3", "s4"]
+			console.log(classlist.contains("div4"));//true
+			classlist.toggle("s5");
+			console.log(classlist);//["div4", "s2", "s3", "s4", "s5"]
+		</script>
+		<!-- head -->
+		<script type="text/javascript">
+			var head=document.head||document.getElementsByTagName("head")[0];
+		</script>
+		<!-- 自定义数据属性 -->
+		<div id="div5" data-name="div5Name" data-infor="div5">
+			this is div5
+		</div>
+		<script type="text/javascript">
+			var div5=document.getElementById("div5");
+			var div5_1=div5.dataset.name;
+			console.log(div5_1);
+		</script>
+		
+		<!-- innerHTML属性  -->
+		<!-- 读取模式 -->
+		<div id="div6">
+			<p>
+				this is a paragraph
+			</p>
+			<!-- ul -->
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var div6=document.getElementById("div6");
+			console.log(div6.innerHTML);//<p>this is a paragraph</p><!-- ul --><ul><li>1</li><li>2</li><li>3</li></ul>
+			console.log(typeof div6.innerHTML);//string
+		</script>
+		<!-- 写入模式 -->
+		<div id="div7">
+			<p>
+				this is a paragraph
+			</p>
+			<!-- ul -->
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var div7=document.getElementById("div7");
+			div7.innerHTML="<a href='http://www.baidu.com'>baidu.com</a>";
+			var text="<a href='http://www.baidu.com'>baidu.com</a>";
+			// var sanitized=window.toStaticHTML(text);
+			// console.log(sanitized);
+		</script>
+		
+		<!-- outerHTML属性 -->
+		<!-- 读取模式 -->
+		<div id="div8">
+			<p>
+				this is a paragraph
+			</p>
+			<!-- ul -->
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var div8=document.getElementById("div8");
+			console.log(div8.outerHTML);//<div id="div8"><p>this is a paragraph</p><!-- ul --><ul><li>1</li><li>2</li><li>3</li></ul></div>
+		</script>
+		<!-- 写入模式 -->
+		<div id="div9">
+			<p>
+				this is a paragraph
+			</p>
+			<!-- ul -->
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var div9=document.getElementById("div9");
+			var div7=document.getElementById("div7");
+			div9.outerHTML="<a href='http://www.baidu.com'>baidu.com</a>";
+		</script>
+	</body>
+</html>

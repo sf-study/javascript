@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>window</title>
+	</head>
+
+	<body>
+		<div>
+			<iframe src="" name="top" > </iframe>
+		</div>
+		<script type="text/javascript">
+            var a1 = 29;
+            window.a2 = "red";
+            delete window.a1;
+            delete window.a2;
+            console.log(a1);
+            //29
+            // console.log(a2);
+            //报错， nut defined
+
+            /*
+             * **********
+             * 导航和打开窗口
+             * **********
+             */
+            var leftpos = ( typeof window.screenLeft == 'number') ? window.screenLeft : window.screenX;
+            var toppos = ( typeof window.screenTop == 'number') ? window.screenTop : window.screenY;
+            console.log(leftpos);
+            console.log(toppos);
+
+            var a3 = window.outerWidth;
+            var a4 = window.outerHeight;
+            console.log("outerWidth--" + a3);
+            console.log("outerHeight--" + a4);
+            var a5 = window.innerWidth;
+            var a6 = window.innerHeight;
+            console.log("innerWidth--" + a5);
+            console.log("innerHeight--" + a6);
+
+            /*
+             * **********
+             * 跨浏览器取得宽高
+             * **********
+             */
+            var b1 = window.innerWidth, b2 = window.innerHeight;
+            if ( typeof b1 != 'number') {
+                if (document.compatMode == 'CSS1Compat') {
+                    b1 = document.documentElement.clientWidth;
+                    b2 = document.documentElement.clientHeight;
+                } else {
+                    b1 = document.body.clientWidth;
+                    b2 = document.body.clientHeight;
+                }
+            }
+            console.log(b1 + ',' + b2);
+
+            /*
+            * **********
+            * 打开窗口
+            * **********
+            */
+            window.open("new_file.html","top");
+		</script>
+	</body>
+</html>

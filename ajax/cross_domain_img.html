@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>img_cross_domain</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var img=new Image();
+			img.onload=img.onerror=function(){
+				alert("down!");
+			};
+			img.src="http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E6%B5%B7%E8%B4%BC%E7%8E%8B&step_word=&pn=3&spn=0&di=142128806160&pi=&rn=1&tn=baiduimagedetail&is=&istype=0&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=undefined&cs=2528577977%2C2990952719&os=2688386169%2C4205021754&simid=3431364432%2C283245220&adpicid=0&ln=1000&fr=&fmq=1447318939150_R&ic=undefined&s=undefined&se=&sme=&tab=0&width=&height=&face=undefined&ist=&jit=&cg=&bdtype=0&objurl=http%3A%2F%2Fp1.gexing.com%2FG1%2FM00%2FAC%2F85%2FrBACFFPzVnXhKBDLAACQ503PAK8037.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3B2jxtg2_z%26e3Bv54AzdH3Fqqrtu7AzdH3F8a9b0n9_z%26e3Bip4s&gsm=0/test?name=xinxin";
+		</script>
+	</body>
+</html>

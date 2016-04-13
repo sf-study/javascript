@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dress>
+	<yf>
+		<color>红色</color>
+		<size>s</size>
+	</yf>
+	<yf>
+		<color>蓝色</color>
+		<size>s</size>
+	</yf>
+</dress>

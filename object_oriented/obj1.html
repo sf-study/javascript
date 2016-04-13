@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>oo1</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var oa1={
+				name:"xinxin"
+			};
+			Object.defineProperty(oa1,"name",{
+				writable:false
+			});
+			console.log(oa1.name);//xinxin
+			oa1.name="sss";
+			console.log(oa1.name);//xinxin
+			
+			var oa2={
+				_year:2004,
+				edition:1
+			};
+			Object.defineProperty(oa2,"year",{
+				get:function(){
+					return this._year;
+				},
+				set:function(newValue){
+					if(newValue>2004){
+						this._year=newValue;
+						this.edition+=newValue-2004;
+					}
+				}
+			});
+			oa2.year=2005;
+			console.log(oa2.edition);//2
+			
+			var oa3={};
+			Object.defineProperties(oa3,{
+				_year:{
+					value:2004
+				},
+				edition:{
+					value:1
+				},
+				year:{
+					get:function(){
+						return this._year;
+					},
+					set:function(newValue){
+						if(newValue>2004){
+							this._year=newValue;
+							this.edition+=newValue-2004;
+						}
+					}
+				}
+			});
+			
+			
+			var oa4={};
+			Object.defineProperties(oa4,{
+				_year:{
+					value:2004
+				},
+				edition:{
+					value:1
+				},
+				year:{
+					get:function(){
+						return this._year;
+					},
+					set:function(newValue){
+						if(newValue>2004){
+							this._year=newValue;
+							this.edition+=newValue-2004;
+						}
+					}
+				}
+			});
+			var des=Object.getOwnPropertyDescriptor(oa4,"_year");
+			console.log(des.value);//2004
+			console.log(des.configurable);//false
+		</script>
+	</body>
+</html>
