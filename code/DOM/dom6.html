@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Title of the document</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var parentWindow=document.defaultView||document.parentWindow;
+			console.log(parentWindow);
+		</script>
+		<script type="text/javascript">
+			var doctype=document.implementation.createDocumentType("html","-//W3C//DTD HTML 4.01 Transitional//EN","http://www.w3.org/TR/html4/loose.dtd");
+
+			var doc=document.implementation.createDocument("","root",null);
+		</script>
+	</body>
+
+</html>
