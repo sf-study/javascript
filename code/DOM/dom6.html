@@ -13,6 +13,29 @@
 			var doctype=document.implementation.createDocumentType("html","-//W3C//DTD HTML 4.01 Transitional//EN","http://www.w3.org/TR/html4/loose.dtd");
 
 			var doc=document.implementation.createDocument("","root",null);
+
+			var htmldoc=document.implementation.createHTMLDocument("new Doc");
+			console.log(htmldoc.title);//new Doc
+			console.log(htmldoc.body);//object
+
+			// if(document.body.isSupported("HTML","2.0")){
+			// 	console.log("HTML 2.0 is support");
+			// }
+
+			var div1=document.createElement("div");
+			div1.setAttribute("class","div0");
+
+			var div2=document.createElement("div");
+			div2.setAttribute("class","div0");
+
+			console.log(div1.isSameNode(div1));
+			console.log(div1.isEqualNode(div2));
+			console.log(div1.isSameNode(div2));
+
+			// document.body.setUserData("name","xinxin",function(){})
+
+			// var value1=document.body.getUserData("name");
+			// console.log(value1);
 		</script>
 	</body>
 
