@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>Title of the document</title>
+		<link rel="stylesheet" type="text/css" href="css/css1.css">
+		<style type="text/css">
+			div{
+				border: 2px solid #000;
+			}
+			#div5{
+				border: 5px solid blue;
+			}
+		</style>
 	</head>
 
 	<body>
+		<div>
+			dddd
+		</div>
 		<script type="text/javascript">
 			var parentWindow=document.defaultView||document.parentWindow;
 			console.log(parentWindow);
@@ -36,6 +49,50 @@
 
 			// var value1=document.body.getUserData("name");
 			// console.log(value1);
+		</script>
+		<div id="div3" style="float: left;background-color: red;">
+			div3
+		</div>
+		<script type="text/javascript" >
+			var div3=document.getElementById("div3");
+
+			console.log(div3.style.backgroundColor);
+
+			console.log(div3.style.border);//定义在style元素中的样式信息，获取不到
+		</script>
+		<br/>
+		<br/>
+		<div id="div4">
+			div4
+		</div>
+		<script type="text/javascript">
+			var div4=document.getElementById("div4");
+			var prop,value,i,len;
+			div4.style.cssText="width:250px;height:100px;background-color:blue";
+			for(var i=0,len=div4.style.length;i<len;i++){
+				console.log(div4.style[i]);//width, height,background-color
+				//或者div4.style.item(i)
+				prop=div4.style.item(i);//取得属性名
+				value=div4.style.getPropertyValue(prop);//通过属性名取得属性值
+				console.log(prop+":"+value);
+
+				var CSSValue;
+				// CSSValue=div4.style.getPropertyCSSValue(prop);
+				// console.log(prop+":"+CSSValue);
+
+				div4.style.removeProperty("background-color");
+			}
+		</script>
+
+		<!-- //计算样式 -->
+		<div id="div5" style="color: #ff0000">
+			div5
+		</div>
+		<script type="text/javascript">
+			var div5=document.getElementById("div5");
+			var computedStyle=document.defaultView.getComputedStyle(div5,null);
+
+			console.log(computedStyle.fontSize);//32px
 		</script>
 	</body>
 
