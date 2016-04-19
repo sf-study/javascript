@@ -94,6 +94,41 @@
 
 			console.log(computedStyle.fontSize);//32px
 		</script>
+		<!-- 操作样式 -->
+		<script type="text/javascript">
+			var sheet=null;
+			for(var i=0,len=document.styleSheets.length;i<len;i++){
+				sheet=document.styleSheets[i];
+				console.log(sheet.href);
+			}
+			// CSS规则
+			var sheet2=document.styleSheets[1];
+			var rules=sheet2.cssRules||sheet2.rules;
+			var rule=rules[0];
+			console.log(rule.selectorText);
+			console.log(rule.cssText);//div { border: 2px solid rgb(0, 0, 0); }
+
+			// 创建规则
+			function insertRule(sheet,selectorText,cssText,position){
+				if(sheet.insertRule){
+					sheet.insertRule(selectorText+"{"+cssText+"}",position);
+				}else{
+					sheet.addRule(selectorText,cssText,position);
+				}
+			}
+
+			insertRule(document.styleSheets[0],"body","background-color:silver",0);
+
+			// 删除规则
+			function deleteRule(sheet,index){
+				if(sheet.deleteRule){
+					sheet.deleteRule(index);
+				}else{
+					sheet.removeRule(index);
+				}
+			}
+			deleteRule(document.styleSheets[1],0);
+		</script>
 	</body>
 
 </html>
