@@ -129,6 +129,27 @@
 			}
 			deleteRule(document.styleSheets[1],0);
 		</script>
+
+		<!-- //元素大小 -->
+		<div id="div6" style="margin: 200px;border: 3px solid #000">
+			div6
+		</div>
+		<script type="text/javascript">
+			var div6=document.getElementById("div6");
+			function getElementLeft(element){
+				var actualLeft=element.offsetLeft;
+				var current=element.offsetParent;
+
+				while(current!==null){
+					actualLeft += current.offsetLeft;
+					current=current.offsetParent;
+				}
+
+				return actualLeft;
+			}
+			var left=getElementLeft(div6);
+			console.log(left);//208
+		</script>
 	</body>
 
 </html>
