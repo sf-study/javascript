@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Title of the document</title>
+		
+	</head>
+
+	<body>
+		<p>
+			网易娱乐4月25日报道 成龙大哥昨日（24日）现身南京，大谈对古建筑物的理解，还有中国文化在西方很受欢迎的见闻。成龙大哥出行，主办方也是安排了大批黑衣保镖护其左右，场面壮观，时尚教父Tony先生全程陪伴在成功大哥身边，两人私交不错
+		</p>
+		<script type="text/javascript">
+			var filter={
+				acceptNode:function(node){
+					return node.tagName.toLowerCase()=="p"?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP;
+				}
+			};
+			var iterator=document.createNodeIterator(document,NodeFilter.SHOW_ELEMENT,null,false);
+			var node=iterator.nextNode();
+			while(node!==null){
+				console.log(node.tagName);
+				node=iterator.nextNode();
+			}
+
+			var filter1=function(node){
+				return node.tagName.toLowerCase()=="p"?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP;
+			};
+			var walker=document.createTreeWalker(document,NodeFilter.SHOW_ELEMENT,null,false);
+			var node1=walker.nextNode();
+			while(node1!==null){
+				console.log(node1.tagName);
+				node1=walker.nextNode();
+			}
+		</script>
+		<!-- 范围 -->
+		<script type="text/javascript">
+			var supportRange=document.implementation.hasFeature("Range","2.0");
+			var alseSupportsRange=(typeof document.createRange=="function");
+			console.log(supportRange);
+			console.log(alseSupportsRange);
+		</script>
+		<p id="p1">
+			<b>hello</b>
+			<b>world</b>
+		</p>
+		<script type="text/javascript">
+			var range1=document.createRange();
+			var range2=document.createRange();
+			p1=document.getElementById("p1");
+			range1.selectNode(p1);
+			range2.selectNodeContents(p1);
+			console.log(range1.startOffset);//偏移量
+			console.log(range1.endOffset);
+
+			console.log(range2.startOffset);//0
+			console.log(range2.endOffset);//5
+		</script>
+		<p id="p2">
+			<b>hello</b>
+			<b>world</b>
+		</p>
+		<script type="text/javascript">
+			var range3=document.createRange();
+			var range4=document.createRange();
+			p2=document.getElementById("p2");
+			var i,len,p2Index=-1;
+			for(i=0,len=p2.parentNode.childNodes.length;i<len;i++){
+				if(p2.parentNode.childNodes[i]==p2){
+					p2Index=i;
+					break;
+				}
+			}
+			range3.setStart(p2.parentNode,p2Index);
+			range3.setEnd(p2.parentNode,p2Index+1);
+			range4.setStart(p2,0);
+			range4.setEnd(p2,p2.childNodes.length);
+		</script>
+	</body>
+
+</html>
