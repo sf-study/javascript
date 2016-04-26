@@ -56,6 +56,7 @@
 			console.log(range2.startOffset);//0
 			console.log(range2.endOffset);//5
 		</script>
+		<!-- DOM范围实现复杂选择 -->
 		<p id="p2">
 			<b>hello</b>
 			<b>world</b>
@@ -75,6 +76,78 @@
 			range3.setEnd(p2.parentNode,p2Index+1);
 			range4.setStart(p2,0);
 			range4.setEnd(p2,p2.childNodes.length);
+		</script>
+
+		<!-- 操作DOM范围中的内容 -->
+		<p id="p3"><b>hello</b>world!</p>
+		<script type="text/javascript">
+			p3=document.getElementById("p3");
+			helloNode=p3.firstChild.firstChild;
+			worldNode=p3.lastChild;
+			rang5=document.createRange();
+			rang5.setStart(helloNode,2);
+			rang5.setEnd(worldNode,3);
+			rang5.deleteContents();
+		</script>
+		<p id="p4"><b>hello</b>world!</p>
+		<script type="text/javascript">
+			p4=document.getElementById("p4");
+			helloNode=p4.firstChild.firstChild;
+			worldNode=p4.lastChild;
+			range6=document.createRange();
+			range6.setStart(helloNode,2);
+			range6.setEnd(worldNode,3);
+
+			var fragment2=range6.cloneContents();
+			console.log(fragment2);
+			document.body.appendChild(fragment2);
+
+			var fragment=range6.extractContents();
+			console.log(fragment);//<b>llo</b>"wor"
+		</script>
+		<!-- 插入DOM范围中的内容 -->
+		<p id="p5"><b>hello</b>world!</p>
+		<script type="text/javascript">
+			p5=document.getElementById("p5");
+			helloNode=p5.firstChild.firstChild;
+			worldNode=p5.lastChild;
+			range7=document.createRange();
+			range7.setStart(helloNode,2);
+			range7.setEnd(worldNode,3);
+
+			var span1=document.createElement("span");
+			span1.style.color="red";
+			span1.appendChild(document.createTextNode("inserted text"));
+			range7.insertNode(span1);//heinserted textlloworld!
+
+			range7.selectNode(helloNode);
+			var span2=document.createElement("span");
+			span2.style.backgroundColor="yellow";
+			range7.surroundContents(span2);
+		</script>
+		<!-- 折叠DOM范围 -->
+		<p id="p6"><b id="test1">测试文本1</b><b id="test2">测试文本2</b></p>
+		<script type="text/javascript">
+			var b1=document.getElementById("test1");
+			var b2=document.getElementById("test2");
+			var range8=document.createRange();
+			range8.setStartAfter(p1);
+			range8.setStartBefore(p2);
+			console.log(range8.collapsed);//true
+		</script>
+
+		<!-- 比较DOM范围 -->
+		<p id="p7"><b>hello</b>world!</p>
+		<script type="text/javascript">
+			var range9=document.createRange();
+			var range10=document.createRange();;
+			var p7=p5=document.getElementById("p7");
+			range9.selectNodeContents(p7);
+			range10.selectNodeContents(p7);
+			range10.setEndBefore(p7.lastChild);
+
+			console.log(range9.compareBoundaryPoints(Range.START_TO_START,range10));//0
+			console.log(range9.compareBoundaryPoints(Range.END_TO_END,range10));//1
 		</script>
 	</body>
 

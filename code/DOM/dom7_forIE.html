@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Title of the document</title>
+		
+	</head>
+
+	<body>
+		<h1>IE8以下版本的范围</h1>
+		<!-- 创建范围 -->
+		<script type="text/javascript">
+			var range=document.body.createTextRange();
+			console.log(range);
+		</script>
+
+		<!-- 用IE范围实现简单的选择 -->
+		<p id="p1"><b>hello</b>world!</p>
+		<script type="text/javascript">
+			var range1=document.body.createTextRange();
+			var found=range1.findText("hello",-1);
+			console.log(found);//true
+			console.log(range1.text);//hello
+
+			var range2=document.body.createTextRange();
+			range2.moveToElementText(p1);
+			console.log(range2.htmlText);
+
+			var ancetor=range2.parentElement();
+			console.log(ancetor);
+		</script>
+
+		<!-- 使用IE范围实现复杂的选择 -->
+
+		<!-- 操作IE范围中的内容 -->
+		<p id="p2">p2p2p2</p>
+		<script type="text/javascript">
+			var range3=document.body.createTextRange();
+			range3.findText("p2p2p2");
+			range3.text="修改后的p2";
+			range3.pasteHTML("<em>插入HTML</em>")
+		</script>
+	</body>
+
+</html>
