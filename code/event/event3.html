@@ -41,5 +41,51 @@
 				console.log(event.inputMethod);
 			})
 		</script>
+		<!-- html事件 -->
+		<!-- beforeunload事件 -->
+		<script type="text/javascript">
+			EventUtil.addHandler(window,'beforeunload',function(event){
+				event=EventUtil.getEvent(event);
+				var mes='是否离开？';
+				event.returnValue=mes;
+				return mes;
+			});
+		</script>
+		<!-- DOMContentLoaded事件 -->
+		<script type="text/javascript">
+			EventUtil.addHandler(document,'DOMContentLoaded',function(event){
+				alert('content loaded');
+			});
+		</script>
+		<!-- readystatechange事件 -->
+		<script type="text/javascript">
+			EventUtil.addHandler(document,'readystatechange',function(event){
+				if(document.readyState=="interactive"||document.readyState=="complete"){
+					EventUtil.removeHandler(document,"readystatechange",arguments.callee);
+					console.log("content loaded");
+				}
+			});
+			EventUtil.addHandler(window,"load",function(){
+				var script1=document.createElement("script");
+				EventUtil.addHandler(script1,"readystatechange",function(event){
+					console.log(123);
+					var event=EventUtil.getEvent(event);
+					var target=EventUtil.getTarget(event);
+
+					if(document.readyState=="loaded"||document.readyState=="complete"){
+						EventUtil.removeHandler(document,"readystatechange",arguments.callee);
+						console.log("script loaded");
+					}
+				});
+				script1.src="js/demo.js";
+				document.body.appendChild(script1);
+			});
+		</script>
+		<!-- hashchange事件 -->
+		<script type="text/javascript">
+			EventUtil.addHandler(window,"hashchange",function(event){
+				console.log("oldURL:"+event.oldURL);
+			});
+		</script>
 	</body>
 </html>
