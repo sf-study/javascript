@@ -1,80 +1,131 @@
 ##目录
 
+[取得form元素的引用](#a1)
+
+[提交表单](#a2)
+
+[重置表单](#a3)
+
+[表单字段](#a4)
+
+[文本框脚本](#a5)
+
+##表单
+
+form元素对应的是HTMLFormElement类型，HTMLFormElement有自己的属性和方法
+
++ acceptCharset:服务器能够处理的字符集，等价与accept-charset特性
+
++ action:接受请求的URL，等价于action特性
+
++ elements:表单中所有空间的集合
+
++ enctype:请求的编码类型，等价于enctype特性
+
++ length:表单中空间的数量
+
++ methed:要发送的HTTP请求的类型，等价于method特性
+
++ name:表单的名称，等价于name特性
+
++ reset():将所有表单域重置为默认的值
+
++ submit():提交表单
+
++ target:用于发送请求和接受响应的窗口名称，等价于target特性
+
+<a name="a1"></a>
 
 ###取得form元素的引用
 
-	<body>
-		<form name="fm2">
-			<input type="text" />
-		</form>
-		<form id="fm1">
-			<input type="text" />
-		</form>
-		<form name="fm3">
-			<input type="text" />
-		</form>
-		<script type="text/javascript">
-			var fm1=document.getElementById('fm1');
-			var fms=document.forms;
-			var fm2=fms[0];
-			var fm3=fms['fm3'];
-			alert(fm3);
-		</script>
-	</body>
+```html
+<body>
+	<form name="fm2">
+		<input type="text" />
+	</form>
+	<form id="fm1">
+		<input type="text" />
+	</form>
+	<form name="fm3">
+		<input type="text" />
+	</form>
+	<script type="text/javascript">
+		var fm1=document.getElementById('fm1');
+		var fms=document.forms;
+		var fm2=fms[0];
+		var fm3=fms['fm3'];
+		alert(fm3);
+	</script>
+</body>
+```
 
 ###表单事件
 
-####提交
-	
-	<p>图像按钮，和submit类型的按钮会触发提交表单事件</p>
-	<form name="fm4">
-		<input type="image" src="../img/st1.jpg" />
-	</form>
-	<script type="text/javascript">
-		//提交表单
-		//fms['fm4'].submit();
-		document.forms['fm4'].onsubmit=function(){
-			alert('你点击提交按钮了');
-		};
-	</script>
+<a name="a2"></a>
 
-####重置
+###提交表单
 
-	<form name="fm5">
-		<input type="reset" />
-	</form>
-	<script type="text/javascript">
-		//document.forms['fm5'].reset();
-		document.forms['fm5'].onreset=function(){
-			alert('你点击了重置按钮');
-		};
-	</script>
+```html
+<p>图像按钮，和submit类型的按钮会触发提交表单事件</p>
+<form name="fm4">
+	<input type="image" src="../img/st1.jpg" />
+</form>
+<script type="text/javascript">
+	//提交表单
+	//fms['fm4'].submit();
+	document.forms['fm4'].onsubmit=function(){
+		alert('你点击提交按钮了');
+	};
+</script>
+```
+
+<a name="a3"></a>
+
+###重置表单
+
+```html
+<form name="fm5">
+	<input type="reset" />
+</form>
+<script type="text/javascript">
+	//document.forms['fm5'].reset();
+	document.forms['fm5'].onreset=function(){
+		alert('你点击了重置按钮');
+	};
+</script>
+```
+
+<a name="a4"></a>
 
 ###表单字段
 
+每个表单都有elements属性，该属性是表单中所有元素的集合，这个elements集合是一个有序列表，其中包含着表单中的所有字段，每个表单字段在elements集合中的顺序，与它们出现在标记中的顺序相同，可以按位置和name特性来访问它们
+
 ####取得表单字段
 
-	<form name="fm6">
-		<input type="text" />
-		<textarea name="texta1">
-			
-		</textarea>
-		<input type="radio"  name="color" value="red" />红色
-		<input type="radio"  name="color" value="blue" />蓝色
-		<input type="radio"  name="color" value="black" />黑色
-	</form>
-	<script type="text/javascript">
-		var fm6=document.forms['fm6'];
-		//访问一个form表单里面的元素，以及表单里面元素的个数
-		var fm60=fm6.elements[0];
-		var fm6L=fm6.length;
-		var fm6T=fm6.elements['texta1'];
+```html
+<form name="fm6">
+	<input type="text" />
+	<textarea name="texta1">
 		
-		//单选按钮 ，返回radioNodeList对象,可以通过数值索引
-		var fm6R=fm6.elements['color'];
-		var fm6R0=fm6R[0];
-		
-	</script>
+	</textarea>
+	<input type="radio"  name="color" value="red" />红色
+	<input type="radio"  name="color" value="blue" />蓝色
+	<input type="radio"  name="color" value="black" />黑色
+</form>
+<script type="text/javascript">
+	var fm6=document.forms['fm6'];
+	//访问一个form表单里面的元素，以及表单里面元素的个数
+	var fm60=fm6.elements[0];
+	var fm6L=fm6.length;
+	var fm6T=fm6.elements['texta1'];
+	
+	//单选按钮 ，返回radioNodeList对象,可以通过数值索引
+	var fm6R=fm6.elements['color'];
+	var fm6R0=fm6R[0];
+	
+</script>
+```
 
 ####表单字段属性
 
@@ -94,74 +145,84 @@
 
 + value当前字段将被提交给费武器的值
 
-	<p id="p7">
-		
-	</p>
-	<form name="fm7">
-		<input type="text" name="fm7_input1" value="输入测试文字" />
-	</form>
-	<script type="text/javascript">
-		var fm7=document.forms['fm7'];
-		var fd7=fm7.elements[0];
-		var p7=document.getElementById('p7');
-		p7.innerHTML='fd7.disabled:'+fd7.disabled+'<br><br>'+'fd7.form:'+fd7.form
-		+'<br><br>'+'fd7.name:'+fd7.name+'<br><br>'+'fd7.readOnly:'+fd7.readOnly
-		+'<br><br>'+'fd7.tabIndex:'+fd7.tabIndex+'<br><br>'+'fd7.type:'+fd7.type
-		+'<br><br>'+'fd7.value:'+fd7.value;
-		fd7.onclick=function(){
-			fd7.value='你点击了文本框，文本框获得焦点，改变了默认的文字';
-		};
-	</script>
+```html
+<p id="p7">
+	
+</p>
+<form name="fm7">
+	<input type="text" name="fm7_input1" value="输入测试文字" />
+</form>
+<script type="text/javascript">
+	var fm7=document.forms['fm7'];
+	var fd7=fm7.elements[0];
+	var p7=document.getElementById('p7');
+	p7.innerHTML='fd7.disabled:'+fd7.disabled+'<br><br>'+'fd7.form:'+fd7.form
+	+'<br><br>'+'fd7.name:'+fd7.name+'<br><br>'+'fd7.readOnly:'+fd7.readOnly
+	+'<br><br>'+'fd7.tabIndex:'+fd7.tabIndex+'<br><br>'+'fd7.type:'+fd7.type
+	+'<br><br>'+'fd7.value:'+fd7.value;
+	fd7.onclick=function(){
+		fd7.value='你点击了文本框，文本框获得焦点，改变了默认的文字';
+	};
+</script>
+```
 
 **共有的表单字段方法**
 
-+ focus()，获得焦点
++ focus()，将浏览器的焦点设置到表单字段
 
-+ blur()，失去焦点
++ blur()，从元素中移走焦点
 
 **共有的表单字段事件**
 
-+ blur
++ blur，当前字段是去焦点时触发
 
-+ change
++ change，对于input和textarea元素，在他们失去焦点且value值改变时触发，对于select元素，在其选项改变时触发
 
-+ focus
++ focus，当字段获得焦点时触发
 
-	<form name="fm8">
-		<input type="text" name="fm8_input1" value="输入测试数字" style="background-color: red" />
-	</form>
-	<script type="text/javascript">
-		var fd8=document.forms['fm8'].elements[0];
-		EventUtil.addHandler(fd8,'focus',function(event){
-			event=EventUtil.getEvent(event);
-			var target=EventUtil.getTarget(event);
-			if(target.style.backgroundColor!='red'){
-				target.style.backgroundColor='yellow';
-			}
-		});
-		EventUtil.addHandler(fd8,'blur',function(){
-			event=EventUtil.getEvent(event);
-			var target=EventUtil.getTarget(event);
-			if(/[^\d]/.test(target.value)){
-				alert('请输入数字');
-				target.style.backgroundColor='red';
-			}else{
-				target.style.backgroundColor='';
-			}
-		});
-		EventUtil.addHandler(fd8,'change',function(){
-			event=EventUtil.getEvent(event);
-			var target=EventUtil.getTarget(event);
-			if(/[^\d]/.test(target.value)){
-				alert('请输入数字');
-				target.style.backgroundColor='red';
-			}else{
-				target.style.backgroundColor='';
-			}
-		});
-	</script>
+```html
+<form name="fm8">
+	<input type="text" name="fm8_input1" value="输入测试数字" style="background-color: red" />
+</form>
+<script type="text/javascript">
+	var fd8=document.forms['fm8'].elements[0];
+	EventUtil.addHandler(fd8,'focus',function(event){
+		event=EventUtil.getEvent(event);
+		var target=EventUtil.getTarget(event);
+		if(target.style.backgroundColor!='red'){
+			target.style.backgroundColor='yellow';
+		}
+	});
+	EventUtil.addHandler(fd8,'blur',function(){
+		event=EventUtil.getEvent(event);
+		var target=EventUtil.getTarget(event);
+		if(/[^\d]/.test(target.value)){
+			alert('请输入数字');
+			target.style.backgroundColor='red';
+		}else{
+			target.style.backgroundColor='';
+		}
+	});
+	EventUtil.addHandler(fd8,'change',function(){
+		event=EventUtil.getEvent(event);
+		var target=EventUtil.getTarget(event);
+		if(/[^\d]/.test(target.value)){
+			alert('请输入数字');
+			target.style.backgroundColor='red';
+		}else{
+			target.style.backgroundColor='';
+		}
+	});
+</script>
+```
 
-###文本框脚本
+<a name="a5"></a>
+
+##文本框脚本
+
+###选择文本
+
+单行文本框和
 
 ####过滤输入
 
