@@ -152,7 +152,7 @@
 			<li>
 				<h1>文本框脚本</h1>
 				<form name="fm9">
-					<input type="text" value="点击输入框" />
+					<input type="text" value="123456789" />
 				</form>
 				<script type="text/javascript">
 					var fm9=document.forms['fm9'];
@@ -160,10 +160,25 @@
 					EventUtil.addHandler(fd9,'focus',function(event){
 						event=EventUtil.getEvent(event);
 						var target=EventUtil.getTarget(event);
-						target.select();
+						target.select(); 
+						// 选择事件
+						EventUtil.addHandler(fd9,"select",function(event){
+							console.log("text select");
+						});
 						//H5扩展属性，可以取得选择的文本
-						var gettext=target.value.substring(target.selectionStart,target.selectionEnd); 
-						alert(target.setSelectionRange(0,3));
+						function getSelectedText(textbox){
+							if(typeof textbox.selectionStart=="number"){
+								return gettext=textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
+							}else if(document.selection){
+								// for ie 8 and 8-
+								return gettext=document.selection.createRange().text;
+							}
+						}
+						var gettext=getSelectedText(fd9);
+						console.log(gettext);
+						// 选择部分文本
+						var sl=target.setSelectionRange(0,3);
+						console.log(sl);
 					});
 				</script>
 			</li>
@@ -179,7 +194,7 @@
 						var target=EventUtil.getTarget(event);
 						
 						var charCode=EventUtil.getCharCode(event);
-						if(! /\d/.test(String.fromCharCode(charCode)) && charCode>9){
+						if(! /\d/.test(String.fromCharCode(charCode)) && charCode>9&&!event.ctrlKey){
 							EventUtil.preventDefault(event);
 						}
 						
@@ -245,7 +260,10 @@
 					<input type="text" name="username" required />
 					<input type="email" name="email" />
 					<input type="url" name="url" />
+					<input type="number" min="0" max="10" step="5" />
 					<input type="text" pattern="\d" name="count" />
+					<input type="text" pattern="\d" name="count" novalidate />
+					<input type="submit" value="submit" />
 				</form>
 			</li>
 			<li>

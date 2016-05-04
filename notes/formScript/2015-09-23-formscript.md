@@ -10,6 +10,8 @@
 
 [文本框脚本](#a5)
 
+[选择框脚本](#a6)
+
 ##表单
 
 form元素对应的是HTMLFormElement类型，HTMLFormElement有自己的属性和方法
@@ -222,31 +224,68 @@ form元素对应的是HTMLFormElement类型，HTMLFormElement有自己的属性�
 
 ###选择文本
 
-单行文本框和
+单行文本框和多行文本框会将用户输入的内容保存在value属性中，可以通过这个属性读取和设置文本框的值，在处理文本框的时候最好不要使用DOM方法
 
-####过滤输入
+文本框支持一个select()方法，该方法用来选择文本框中所有的文本，该方法不接受参数
+
+**选择事件**与select()方法对应的select事件，在选择了文本框中的文本时，会触发select事件
+
+**取得选择的文本**selectionStart属性和selectionEnd属性表示所选文本的范围，
+IE9+，Firefox，Safari，Chrome，Opera
+
+**选择部分文本**setSelectionRange()方法接受两个参数，要选择的第一个字符的索引，和要选择的最后一个字符的索引
+
+[查看示例](/code/formscript/2015-09-24-form1.html)
+
+###过滤输入
 
 例如过滤非数字的输入
 
-	<form name="fm10">
-		<input type="text" />
-	</form>
-	<script type="text/javascript">
-		var fm10=document.forms['fm10'];
-		EventUtil.addHandler(fm10.elements[0],'keypress',function(event){
-			event=EventUtil.getEvent(event);
-			var target=EventUtil.getTarget(event);
-			
-			var charCode=EventUtil.getCharCode(event);
-			if(! /\d/.test(String.fromCharCode(charCode)) && charCode>9){
-				EventUtil.preventDefault(event);
-			}
-			
-		});
-		//当输入的是中文的时候，无效
-	</script>
+```html
+<form name="fm10">
+	<input type="text" />
+</form>
+<script type="text/javascript">
+	var fm10=document.forms['fm10'];
+	EventUtil.addHandler(fm10.elements[0],'keypress',function(event){
+		event=EventUtil.getEvent(event);
+		var target=EventUtil.getTarget(event);
+		
+		var charCode=EventUtil.getCharCode(event);
+		if(! /\d/.test(String.fromCharCode(charCode)) && charCode>9){
+			EventUtil.preventDefault(event);
+		}
+		
+	});
+	//当输入的是中文的时候，无效
+</script>
+```
 
-####访问剪贴板
+###访问剪贴板
+
+剪贴板事件：
+
++ beforecopy:在发生复制操作前触发
+
++ copy:在发生复制操作时触发
+
++ beforecut:在发生剪切操作前触发
+
++ cut:在发生剪切操作时触发
+
++ beforepaste:在发生粘贴操作前触发
+
++ paste:在发生粘贴操作时触发
+
+访问剪贴板中的数据可以使用clipboardData对象，在IE中这个对象是window的属性，而在Firefox4+，Safari和Chrome中这个对象是event对象的属性
+
+clipboardData对象有三个方法：
+
++ getData():从剪贴板中取得数据，接受一个参数，即要取得的数据格式
+
++ setData():第一个参数是数据类型，第二个参数是要放在剪贴板中的文本
+
++ clearData():
 
 	<form name="fm11">
 		<input type="text" />
@@ -263,51 +302,81 @@ form元素对应的是HTMLFormElement类型，HTMLFormElement有自己的属性�
 		});
 	</script>
 
-####自动切换焦点
+###自动切换焦点
 
-	<form name="fm12">
-		<input type="text" maxlength="3" />
-		<input type="text" maxlength="3" />
-		<input type="text" maxlength="4" />
-	</form>
-	<script type="text/javascript">
-		var fm12=document.forms['fm12']; 
-		(function(){
-			function tabForward(event){
-				event=EventUtil.getEvent(event);
-				var target=EventUtil.getTarget(event);	
-				if(target.value.length==target.maxLength){
-					var form=target.form;
-					for(var i=0,len=form.elements.length;i<len;i++){
-						if(form.elements[i]==target){
-							if(form.elements[i+1]){
-								form.elements[i+1].focus();
-							}
-							return;
+```html
+<form name="fm12">
+	<input type="text" maxlength="3" />
+	<input type="text" maxlength="3" />
+	<input type="text" maxlength="4" />
+</form>
+<script type="text/javascript">
+	var fm12=document.forms['fm12']; 
+	(function(){
+		function tabForward(event){
+			event=EventUtil.getEvent(event);
+			var target=EventUtil.getTarget(event);	
+			if(target.value.length==target.maxLength){
+				var form=target.form;
+				for(var i=0,len=form.elements.length;i<len;i++){
+					if(form.elements[i]==target){
+						if(form.elements[i+1]){
+							form.elements[i+1].focus();
 						}
+						return;
 					}
 				}
 			}
-			var fd121=fm12.elements[0];
-			var fd122=fm12.elements[1];
-			var fd123=fm12.elements[2];
-			EventUtil.addHandler(fd121,'keyup',tabForward);
-			EventUtil.addHandler(fd122,'keyup',tabForward);
-			EventUtil.addHandler(fd123,'keyup',tabForward);
-		})();
-	</script>
+		}
+		var fd121=fm12.elements[0];
+		var fd122=fm12.elements[1];
+		var fd123=fm12.elements[2];
+		EventUtil.addHandler(fd121,'keyup',tabForward);
+		EventUtil.addHandler(fd122,'keyup',tabForward);
+		EventUtil.addHandler(fd123,'keyup',tabForward);
+	})();
+</script>
+```
 
-####HTML5约束验证API
+###HTML5约束验证API
 
-	<form name="fm13">
-		<!-- required必填 -->
-		<input type="text" name="username" required />
-		<input type="email" name="email" />
-		<input type="url" name="url" />
-		<input type="text" pattern="\d" name="count" />
-	</form>
+####必填字段
 
-###选择框脚本
+	<input type="text" name="username" required />
+
+required属性适用于input,textarea,select元素，可以通过该属性检测是否为必填字段
+
+####输入类型
+
+HTML5为input元素的type属性新增了几个值：eamil,url是得到支持最多的类型
+
+####数值范围
+
+	<input type="number" min="0" max="10" step="5" />
+
+####输入模式
+
+HTML5为文本字段新增了pattern属性，这个属性的值是一个正则表达式，可以通过该属性访问模式
+
+	<input type="text" pattern="\d" name="count" />
+
+####检测有效性
+
+使用checkValidity()方法检测表单中的某个字段是否有效，所有的表单字段都有这个方法，如果字段有效，返回true，否则返回false。
+
+判断依据是本书前面介绍的那些约束
+
+validity属性表示为什么字段无效（详细：p430）
+
+####禁用验证
+
+novalidate属性可以禁用验证
+
+	<input type="text" pattern="\d" name="count" novalidate />
+
+<a name="a6"></a>
+
+##选择框脚本
 
 	<form name="fm14">
 		<select>
