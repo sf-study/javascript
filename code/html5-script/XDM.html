@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>black</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	</head>
+
+	<body>
+		<iframe src="media.html" id="myframe">
+			
+		</iframe>
+		<script type="text/javascript">
+			var iframeWindow=document.getElementById("myframe").contentWindow;
+			iframeWindow.postMessage("a secret","http://192.168.0.181/github/javascript_study/code/html5-script");
+
+			iframeWindow.onmessage=function(event){
+            	console.log(123);
+				if(event.origin=="http://192.168.0.181/github/javascript_study/code/html5-script"){
+					processMessage(event.data);
+					console.log(event.data);
+					event.source.postMessage("received!","http://192.168.0.181/github/javascript_study/code/html5-script")
+				}
+			};
+		</script>
+	</body>
+</html>
