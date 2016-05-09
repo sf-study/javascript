@@ -66,3 +66,35 @@ throw操作符，用于随时抛出自定义的错误，抛出错误时，必须
 + 数据类型错误
 
 + 通信错误
+
+##调试技术
+
+###将消息记录到控制台
+
+可以通过console对象向Javascript控制台写入消息，这个对象具有下列方法
+
++ error(message)，将错误消息记录到控制台
+
++ info(message)，将信息性消息，记录到控制台
+
++ log(message)，将一般消息记录到控制台
+
++ warn(message)，将警告消息记录到控制台
+
+###抛出错误
+
+对于大型应用程序来说，自定义的错误通常都使用assert（）抛出，这个函数接受两个参数，一个是求值结果应该为true的条件，另一个是条件为false时要抛出的错误
+
+```javascript
+function assert(condition,message){
+	if(!condition){
+		throw new Error(message);
+	}
+}
+```
+
+###常见的IE错误
+
++ 操作终止
+
++ 
