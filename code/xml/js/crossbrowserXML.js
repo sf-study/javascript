@@ -14,6 +14,7 @@ function createDocuments() {
     return new ActiveXObject(arguments.callee.activeXString);
 }
 
+// 解析
 function parseXml(xml) {
     var xmldom = null;
     if ( typeof DOMParser != 'undefined') {
@@ -34,4 +35,16 @@ function parseXml(xml) {
         throw new Error('No XML parser available');
     }
     return xmldom;
+}
+
+// 序列化
+function serializeXml(xmldom){
+   
+    if (typeof XMLSerializer != "undefined"){
+        return (new XMLSerializer()).serializeToString(xmldom);
+    } else if (typeof xmldom.xml != "undefined"){
+        return xmldom.xml;
+    } else {
+        throw new Error("Could not serialize XML DOM.");
+    }
 }

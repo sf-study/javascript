@@ -15,7 +15,7 @@
              * 创建一个空的xml文档
              */
             var xmldom = document.implementation.createDocument('', 'root', null);
-            console.log('name of xmldom is:' + xmldom.documentElement.tagName);
+            console.log('name of xmldom is:' + xmldom.documentElement.tagName);//name of xmldom is:root
             var child = xmldom.createElement('child');
             xmldom.documentElement.appendChild(child);
             /*
@@ -25,12 +25,13 @@
              */
             var parser = new DOMParser();
             var xmldom2 = parser.parseFromString('<root><child></child></root>', 'text/xml');
-            console.log('name of xmldom2 is:' + xmldom2.documentElement.tagName);
+            console.log('name of xmldom2 is:' + xmldom2.documentElement.tagName);//name of xmldom2 is:root
             console.log('xmldom2 firstChild is:' + xmldom2.documentElement.firstChild.tagName);
+            // xmldom2 firstChild is:child
             var anotherchild = xmldom2.createElement('child');
             xmldom2.documentElement.appendChild(anotherchild);
             var child2 = xmldom2.getElementsByTagName('child');
-            console.log('xmldom2 child length:' + child2.length);
+            console.log('xmldom2 child length:' + child2.length);//2
 
             var parser3 = new DOMParser(), xmldom3, errors3;
             try {
