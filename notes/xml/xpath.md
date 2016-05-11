@@ -124,3 +124,132 @@ if (result6 !== null) {
 
 ####命名空间的支持
 
+```javascript
+var xmldom = (new DOMParser()).parseFromString("<?xml version=\"1.0\"?><wrox:books xmlns:wrox=\"http://www.wrox.com/\"><wrox:book><wrox:title>Professional JavaScript for Web Developers</wrox:title><wrox:author>Nicholas C. Zakas</wrox:author></wrox:book><wrox:book><wrox:title>Professional Ajax</wrox:title><wrox:author>Nicholas C. Zakas</wrox:author><wrox:author>Jeremy McPeak</wrox:author><wrox:author>Joe Fawcett</wrox:author></wrox:book></wrox:books>", "text/xml");
+// 创建XPathNSResolver
+var nsresolver = xmldom.createNSResolver(xmldom.documentElement);
+console.log(xmldom);
+console.log(xmldom.documentElement);
+var result = xmldom.evaluate("wrox:book/wrox:author", 
+                             xmldom.documentElement, nsresolver,
+                             XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+```
+
+###IE中的XPath
+
+IE对XPath的支持是内置在基于ActiveX的XML DOM文档对象中的，为了在IE9之前的版本使用XPath，必须基于ActiveX的实现
+
+这个接口在每个节点上额外定义两个方法：selectSingleNode()和selectNodes()
+
+selectSingleNode()方法接受一个XPath模式，在找到匹配的节点时返回第一个匹配的节点，如果没有，返回null
+
+    var element = xmldom.documentElement.selectSingleNode("/a/b");
+    p = element.xml + '<br/>';
+
+selectNodes()，也方法接受一个XPath模式，返回与模式匹配的所有节点的NodeList，如果没有则返回一个为0 的nodelist
+
+    var element = xmldom1.documentElement.selectNodes("/a/b");
+    p += element.length + '<br/>';
+
+####IE对命名空间的支持
+
+在IE中处理包含命名空间的XPath表达式，你必须知道自己使用的命名空间，并按照下列的格式创建一个字符串
+
+    "xmlns:prefix1='uri1' xmlns:prefix2='uri2' xmlns:prefix3='uri3'"
+
+然后将这个字符串传入到XML DOM文档对象的setProperty()方法中，这个方法接受两个参数：要设置的属性名和属性值
+
+    xmldom2.setProperty('SelectionNamespaces', "xmlns:b='http://192.168.0.116/'");
+    var result = xmldom.documentElement.selectNodes('b:books/b:book');
+
+###跨浏览器使用XPath
+
+####跨浏览器selectSingleNode()
+
+```javascript
+function selectSingleNode(context, expression, namespaces){
+var doc = (context.nodeType != 9 ? context.ownerDocument : context);
+
+if (typeof doc.evaluate != "undefined"){
+    var nsresolver = null;
+    if (namespaces instanceof Object){
+        nsresolver = function(prefix){
+            return namespaces[prefix];
+        };
+    }
+    
+    var result = doc.evaluate(expression, context, nsresolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    return (result !== null ? result.singleNodeValue : null);
+
+} else if (typeof context.selectSingleNode != "undefined"){
+
+    //create namespace string
+    if (namespaces instanceof Object){
+        var ns = "";
+        for (var prefix in namespaces){
+            if (namespaces.hasOwnProperty(prefix)){
+                ns += "xmlns:" + prefix + "='" + namespaces[prefix] + "' ";
+            }
+        }
+        doc.setProperty("SelectionNamespaces", ns);
+    }
+    return context.selectSingleNode(expression);
+} else {
+    throw new Error("No XPath engine found.");
+}
+}
+```
+
+selectSingleNode()接受三个参数：上下文节点，XPath表达式和可选的命名空间对象
+
+####跨浏览器selectNodes()
+
+```javascript
+function selectNodes(context, expression, namespaces){
+var doc = (context.nodeType != 9 ? context.ownerDocument : context);
+
+if (typeof doc.evaluate != "undefined"){
+    var nsresolver = null;
+    if (namespaces instanceof Object){
+        nsresolver = function(prefix){
+            return namespaces[prefix];
+        };
+    }
+    
+    var result = doc.evaluate(expression, context, nsresolver, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    var nodes = new Array();
+    
+    if (result !== null){
+        for (var i=0, len=result.snapshotLength; i < len; i++){
+            nodes.push(result.snapshotItem(i));
+        }
+    }
+    
+    return nodes;
+} else if (typeof context.selectNodes != "undefined"){
+
+    //create namespace string
+    if (namespaces instanceof Object){
+        var ns = "";
+        for (var prefix in namespaces){
+            if (namespaces.hasOwnProperty(prefix)){
+                ns += "xmlns:" + prefix + "='" + namespaces[prefix] + "' ";
+            }
+        }
+        doc.setProperty("SelectionNamespaces", ns);
+    }
+    var result = context.selectNodes(expression);
+    var nodes = new Array();
+    
+    for (var i=0,len=result.length; i < len; i++){
+        nodes.push(result[i]);
+    }
+    
+    return nodes;
+} else {
+    throw new Error("No XPath engine found.");
+}
+}
+```
+
+selectNodes()接受三个参数：上下文节点，XPath表达式和可选的命名空间对象
