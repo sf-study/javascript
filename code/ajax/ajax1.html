@@ -21,6 +21,8 @@
 			console.log(status);
 			if(status>=200&&status<=300){
 				console.log(xhr.responseText);
+				var allhd=xhr.getAllResponseHeaders();
+				console.log(allhd);
 			}else{
 				console.log("requset was unsuccessful:"+status);
 			}

@@ -15,18 +15,24 @@
 			<label for="user-name">Name:</label>
 			<input type="text" id="user-name" name="user-name" />
 			<br />
+            <br />
 			<label for="user-email">Email:</label>
 			<input type="text" id="user-email" name="user-email" />
 			<br />
+            <br />
 			<input type="button" value="提交" onclick="submitData()" />
 		</form>
+        <br />
+        <br />
 		<form id="user-info1">
 			<label for="user-name">Name:</label>
 			<input type="text" id="user-name1" name="user-name" />
 			<br />
+            <br />
 			<label for="user-email">Email:</label>
 			<input type="text" id="user-email1" name="user-email" />
 			<br />
+            <br />
 			<input type="button" value="提交" onclick="submitData1()" />
 		</form>
 		<script type="text/javascript">
@@ -55,9 +61,9 @@
                 try {
                     if (xhr1.readyState == 4) {
                         if ((xhr1.status >= 200 && xhr1.status < 300) || xhr1.status == 304) {
-                            alert(xhr1.responseText);
+                            console.log(xhr1.responseText);
                         } else {
-                            alert("Request was unsuccessful: " + xhr1.status);
+                            console.log("Request was unsuccessful: " + xhr1.status);
                         }
                     }
                 } catch (ex) {
@@ -65,10 +71,10 @@
                 }
             };
 
-            xhr1.open("get", "timeout.php", true);
+            xhr1.open("get", "postexample.php", true);
             xhr1.timeout = 1000;
             xhr1.ontimeout = function() {
-                alert("Request did not return in a second.");
+                console.log("Request did not return in a second.");
             };
             xhr1.send(null);
 		</script>

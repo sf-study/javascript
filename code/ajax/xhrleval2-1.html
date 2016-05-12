@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>ajax1</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+	</head>
+
+	<body>
+		<form id="user-info">
+			<label for="user-name">Name:</label>
+			<input type="text" id="user-name" name="user-name" />
+			<br />
+            <br />
+			<label for="user-email">Email:</label>
+			<input type="text" id="user-email" name="user-email" />
+			<br />
+            <br />
+			<input type="submit" value="提交" id="submit" />
+		</form>
+		<script type="text/javascript">
+            function createXHR(){
+                if (typeof XMLHttpRequest != "undefined"){
+                    return new XMLHttpRequest();
+                } else if (typeof ActiveXObject != "undefined"){
+                    if (typeof arguments.callee.activeXString != "string"){
+                        var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0",
+                                        "MSXML2.XMLHttp"];
+                
+                        for (var i=0,len=versions.length; i < len; i++){
+                            try {
+                                var xhr = new ActiveXObject(versions[i]);
+                                arguments.callee.activeXString = versions[i];
+                                return xhr;
+                            } catch (ex){
+                                //skip
+                            }
+                        }
+                    }
+                
+                    return new ActiveXObject(arguments.callee.activeXString);
+                } else {
+                    throw new Error("No XHR object available.");
+                }
+            }
+            //创建对象    
+            var xhr = createXHR(); 
+
+            var submit=document.getElementById('submit');
+            submit.onclick=function(){
+                xhr.open("post","postexample.php",true);
+                xhr.onreadystatechange = function(event) {
+                    if (xhr.readyState == 4) {
+                        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                            alert(xhr.responseText);
+                        } else {
+                            alert("Request was unsuccessful: " + xhr.status);
+                        }
+                    }
+                };
+                var form=document.getElementById('user-info');
+                xhr.send(new FormData(form));
+            };
+		</script>
+	</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>ajax1</title>
+		<meta name="description" content="">
+		<meta name="author" content="Administrator">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		
+	</head>
+
+	<body>
+		<form id="myform">
+			name:<input type="text" name="name" />
+			<br/><br/>
+			email:<input type="text" name="email" />
+			<br/><br/>
+			<input type="submit" id="submit" id="submit" />
+		</form>
+		<script type="text/javascript">
+			function serialize(form){        
+	            var parts = [],
+	                field = null,
+	                i,
+	                len,
+	                j,
+	                optLen,
+	                option,
+	                optValue;
+	            
+	            for (i=0, len=form.elements.length; i < len; i++){
+	                field = form.elements[i];
+	            
+	                switch(field.type){
+	                    case "select-one":
+	                    case "select-multiple":
+	                    
+	                        if (field.name.length){
+	                            for (j=0, optLen = field.options.length; j < optLen; j++){
+	                                option = field.options[j];
+	                                if (option.selected){
+	                                    optValue = "";
+	                                    if (option.hasAttribute){
+	                                        optValue = (option.hasAttribute("value") ? option.value : option.text);
+	                                    } else {
+	                                        optValue = (option.attributes["value"].specified ? option.value : option.text);
+	                                    }
+	                                    parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(optValue));
+	                                }
+	                            }
+	                        }
+	                        break;
+	                        
+	                    case undefined:     //fieldset
+	                    case "file":        //file input
+	                    case "submit":      //submit button
+	                    case "reset":       //reset button
+	                    case "button":      //custom button
+	                        break;
+	                        
+	                    case "radio":       //radio button
+	                    case "checkbox":    //checkbox
+	                        if (!field.checked){
+	                            break;
+	                        }
+	                        /* falls through */
+	                                    
+	                    default:
+	                        //don't include form fields without names
+	                        if (field.name.length){
+	                            parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(field.value));
+	                        }
+	                }
+	            }        
+	            return parts.join("&");
+	        }
+
+			function createXHR(){
+	            if (typeof XMLHttpRequest != "undefined"){
+	                return new XMLHttpRequest();
+	            } else if (typeof ActiveXObject != "undefined"){
+	                if (typeof arguments.callee.activeXString != "string"){
+	                    var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0",
+	                                    "MSXML2.XMLHttp"];
+	            
+	                    for (var i=0,len=versions.length; i < len; i++){
+	                        try {
+	                            var xhr = new ActiveXObject(versions[i]);
+	                            arguments.callee.activeXString = versions[i];
+	                            return xhr;
+	                        } catch (ex){
+	                            //skip
+	                        }
+	                    }
+	                }
+	            
+	                return new ActiveXObject(arguments.callee.activeXString);
+	            } else {
+	                throw new Error("No XHR object available.");
+	            }
+	        }
+            //创建对象    
+	        var xhr = createXHR(); 
+			
+			//
+			var submit=document.getElementById('submit');
+			submit.onclick=function(){
+				xhr.open("post","postexample.php",true);
+				xhr.setRequestHeader("Content-Type","application/x-www/form/urlencode");
+				var form=document.getElementById('myform');
+				xhr.send(serialize(form));
+			};
+			
+		</script>
+	</body>
+</html>

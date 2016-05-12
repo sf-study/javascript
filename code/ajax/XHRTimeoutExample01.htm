@@ -48,6 +48,7 @@
         };
         
         xhr.open("get", "timeout.php", true);
+        xhr.setRequestHeader("MyHeader","MyValue");
         xhr.timeout = 1000;
         xhr.ontimeout = function(){
             alert("Request did not return in a second.");
