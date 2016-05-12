@@ -16,10 +16,15 @@
                 authors : ['xiahua', 'xiatian'],
                 edition : 3,
                 year : 2011,
+                sales:null,
+                un:undefined,
+                sayName:function(){
+                    console.log("name");
+                }
             };
             var jsonText = JSON.stringify(book);
             console.log(jsonText);
-            //{title:'javascript',authors:['xiahua','xiatian'],edition:3,year:2011};
+            //{"title":"javascript","authors":["xiahua","xiatian"],"edition":3,"year":2011,"sales":null}
             
             var jsonText2 = JSON.stringify(book, ["title", "edition"], 4);
             console.log(jsonText2);
@@ -46,7 +51,7 @@
             
             var jsoncopy4=JSON.parse(jsonText);
             console.log(jsoncopy4);
-            
+            // toJSON()方法
             var book2 = {
                 title : 'css权威指南',
                 authors : ['xinxin', 'linda'],
@@ -57,7 +62,7 @@
                 }
             };
             var jsonText5=JSON.stringify(book2);
-            console.log(jsonText5);
+            console.log(jsonText5);//"css权威指南"
             
             var book6 = {
                 title : 'css权威指南',

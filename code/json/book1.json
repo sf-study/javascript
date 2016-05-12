@@ -1,0 +1,9 @@
+{
+	"name":"xiahua",
+	"age":22,
+	"school":{
+		"name":"jialidun",
+		"location":"jinhailu"
+	},
+	"friends":["lisa","cherry","gary"]
+}
