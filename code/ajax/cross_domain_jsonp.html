@@ -12,7 +12,7 @@
 	<body>
 		<script type="text/javascript">
 			function handleResponse(response){
-				alert("you are at IP address"+response.ip+",witch is in"+response.sity+","+response.region_name);
+				alert("you are at IP address"+response.ip+",witch is in "+response.city+","+response.region_name);
 			}
 			var script=document.createElement("script");
 			script.src="http://freegeoip.net/json/?callback=handleResponse";
